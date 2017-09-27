@@ -10,6 +10,5 @@ package test;
  * @author Noah
  */
 public class Node {
-    int x,y;
-    
+    int x,y;    
 }

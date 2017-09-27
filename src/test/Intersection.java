@@ -12,7 +12,6 @@ import java.util.ArrayList;
  * @author Noah
  */
 public class Intersection extends Node{
-    int x,y;
     ArrayList<Path> routes;
     
     public Intersection(int x0, int y0){

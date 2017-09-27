@@ -9,16 +9,10 @@ package test;
  *
  * @author Noah G
  */
-public class Stairs extends Node{
-    int width, height, x0, y0; //Width and Height of the stairs in pixels, x0/y0 is the top-left corner of the stairs
-    public Stairs(){
-        width=height=x0=y0=0;
+public class Stairs extends Path{
+    public Stairs(Node n1, Node n2) {
+        super(n1, n2);
     }
-    public Stairs(int w, int h, int x, int y){
-        width=w;
-        height=h;
-        x0=x;
-        y0=y;
-    }
+    
 
 }

@@ -10,7 +10,6 @@ package test;
  * @author Noah G
  */
 class Entrance extends Node{
-    int x,y;
 
     Entrance(int i, int i0) {
         x=i;

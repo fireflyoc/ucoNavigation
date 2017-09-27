@@ -54,20 +54,39 @@ class aWindow extends JFrame {
         //Setup Intersections
         intersections.add(new Intersection(310,375)); //Above CMSC North Entrance
         intersections.add(new Intersection(280,375)); //North of CMSC East and West of above intersection
-        intersections.add(new Intersection(280,320));
-        intersections.add(new Intersection(280,232));
-        intersections.add(new Intersection(360,232));
-        intersections.add(new Intersection(375,232));
-        intersections.add(new Intersection(442,250));
-        intersections.add(new Intersection(442,375));
-        intersections.add(new Intersection(440,322));
-        intersections.add(new Intersection(418,325));
-        intersections.add(new Intersection(418,370));
+        intersections.add(new Intersection(280,320)); //Above previous on the West side of HOH
+        intersections.add(new Intersection(280,232)); //NW Corner of HOH
+        intersections.add(new Intersection(360,232)); //North Central of HOH
+        intersections.add(new Intersection(375,232)); //North Central of HOH, slightly to East of above
+        intersections.add(new Intersection(442,250)); //NE Corner of HOH, between Nigh and HOH
+        intersections.add(new Intersection(442,375)); //South East corner of HOH
+        intersections.add(new Intersection(440,322)); //East Central between HOH and Nigh
+        intersections.add(new Intersection(418,325)); //East Connection to HOH East Entrances
+        intersections.add(new Intersection(418,370)); //South of above intersection
+        intersections.add(new Intersection(280,259)); //West of HOH NW Entrance
+        intersections.add(new Intersection(301,322)); //West side of HOH down stairs towards W HOH Entrances
         //Setup Paths
         paths.add(new Path(intersections.get(0),buildings.get(0).entrances.get(0))); //Path from CMSC North Entrance up
         paths.add(new Path(intersections.get(0),intersections.get(1))); //E/W Path above CMSC
         paths.add(new Path(intersections.get(1),buildings.get(0).entrances.get(1))); //Path from CMSC East Entrance up
-        
+        paths.add(new Path(intersections.get(1),intersections.get(2))); //Path heading North along West side of HOH
+        paths.add(new Path(intersections.get(2),intersections.get(11))); //Path heading North along West side of HOH
+        paths.add(new Path(intersections.get(3),intersections.get(4))); //Path heading East along North side of HOH
+        paths.add(new Path(intersections.get(4),intersections.get(5))); //Short path heading East along North Side of HOH
+        paths.add(new Path(intersections.get(4),buildings.get(1).entrances.get(4))); //Path from North side of HOH to NC entrance
+        paths.add(new Path(intersections.get(5),intersections.get(6))); //Diaganol path on NE side of HOH
+        paths.add(new Path(intersections.get(6),intersections.get(8))); //Path South between Nigh and HOH
+        paths.add(new Path(intersections.get(8),intersections.get(7))); //Path South between Nigh and HOH
+        paths.add(new Path(intersections.get(8),intersections.get(9))); //Path East towards East HOH Entrances
+        paths.add(new Path(intersections.get(9),intersections.get(10))); //Path South from East HOH Entrances
+        paths.add(new Path(intersections.get(10),intersections.get(0))); //Path East between HOH and CMSC
+        paths.add(new Path(intersections.get(9),buildings.get(1).entrances.get(0)));
+        paths.add(new Path(intersections.get(6),buildings.get(1).entrances.get(1)));
+        paths.add(new Path(intersections.get(11),intersections.get(3))); //Path North along West side of HOH to NW corner
+        paths.add(new Path(intersections.get(11),buildings.get(1).entrances.get(5)));
+        paths.add(new Path(intersections.get(12),buildings.get(1).entrances.get(2)));
+        paths.add(new Path(intersections.get(12),buildings.get(1).entrances.get(3)));
+        paths.add(new Stairs(intersections.get(2),intersections.get(12)));
     }
         
     /*

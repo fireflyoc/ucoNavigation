@@ -5,6 +5,8 @@
  */
 package test;
 
+import static java.lang.Math.pow;
+
 
 /**
  *
@@ -13,10 +15,12 @@ package test;
 public class Path{
     private Node node1;
     private Node node2;
+    private int length;
     
     public Path(Node n1, Node n2){
         node1 = n1;
         node2 = n2;
+        length = (int) pow((pow((n1.x-n2.x),2) + pow((n1.y-n2.y),2)),0.5);
     }
 
     public Node getNode1() {

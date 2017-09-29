@@ -11,9 +11,10 @@ package test;
  */
 class Entrance extends Node{
 
-    Entrance(int i, int i0) {
+    Entrance(int i, int i0, String n) {
         x=i;
         y=i0;
+        id=n;
     }
     
 }

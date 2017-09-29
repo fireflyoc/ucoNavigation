@@ -9,9 +9,8 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
+import java.util.LinkedList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -24,7 +23,9 @@ class aWindow extends JFrame {
     ArrayList<Path> paths;
     ArrayList<Intersection> intersections;
     JPanel panel;
+    Node start, finish;
     int x,y=0;
+    ArrayList<Path> finalPath;
 
     public aWindow() {
         Container contentPane = getContentPane();
@@ -39,28 +40,28 @@ class aWindow extends JFrame {
         Building nigh = new Building(75,230,460,140);
         Building music = new Building(100,80,260,140);
         //Setup Entrances
-        cmsc.addEntrance(new Entrance(310,400)); //CMSC North
-        cmsc.addEntrance(new Entrance(290,444)); //CMSC West
-        hoh.addEntrance(new Entrance(406,327)); //HOH South East
-        hoh.addEntrance(new Entrance(388,298)); //HOH North East
-        hoh.addEntrance(new Entrance(301,325)); //HOH South West -- Stairs
-        hoh.addEntrance(new Entrance(328,295)); //HOH West Central -- Stairs 
-        hoh.addEntrance(new Entrance(365,256)); //HOH  North Central
-        hoh.addEntrance(new Entrance(297,259)); //HOH North West
+        cmsc.addEntrance(new Entrance(310,400,"CMSC North")); //CMSC North
+        cmsc.addEntrance(new Entrance(290,444,"CMSC West")); //CMSC West
+        hoh.addEntrance(new Entrance(406,327,"HOH South East")); //HOH South East
+        hoh.addEntrance(new Entrance(388,298,"HOH North East")); //HOH North East
+        hoh.addEntrance(new Entrance(301,325,"HOH South West")); //HOH South West -- Stairs
+        hoh.addEntrance(new Entrance(328,295,"HOH West Central")); //HOH West Central -- Stairs 
+        hoh.addEntrance(new Entrance(365,256,"HOH  North Central")); //HOH  North Central
+        hoh.addEntrance(new Entrance(297,259,"HOH North West")); //HOH North West
         //Setup Intersections
-        intersections.add(new Intersection(310,375)); //Above CMSC North Entrance
-        intersections.add(new Intersection(280,375)); //North of CMSC East and West of above intersection
-        intersections.add(new Intersection(280,320)); //Above previous on the West side of HOH
-        intersections.add(new Intersection(280,232)); //NW Corner of HOH
-        intersections.add(new Intersection(360,232)); //North Central of HOH
-        intersections.add(new Intersection(375,232)); //North Central of HOH, slightly to East of above
-        intersections.add(new Intersection(442,250)); //NE Corner of HOH, between Nigh and HOH
-        intersections.add(new Intersection(442,375)); //South East corner of HOH
-        intersections.add(new Intersection(440,322)); //East Central between HOH and Nigh
-        intersections.add(new Intersection(418,325)); //East Connection to HOH East Entrances
-        intersections.add(new Intersection(418,370)); //South of above intersection
-        intersections.add(new Intersection(280,259)); //West of HOH NW Entrance
-        intersections.add(new Intersection(301,322)); //West side of HOH down stairs towards W HOH Entrances
+        intersections.add(new Intersection(310,375,"a")); //Above CMSC North Entrance
+        intersections.add(new Intersection(280,375,"b")); //North of CMSC East and West of above intersection
+        intersections.add(new Intersection(280,320,"c")); //Above previous on the West side of HOH
+        intersections.add(new Intersection(280,232,"d")); //NW Corner of HOH
+        intersections.add(new Intersection(360,232,"e")); //North Central of HOH
+        intersections.add(new Intersection(375,232,"f")); //North Central of HOH, slightly to East of above
+        intersections.add(new Intersection(442,250,"g")); //NE Corner of HOH, between Nigh and HOH
+        intersections.add(new Intersection(442,375,"h")); //South East corner of HOH
+        intersections.add(new Intersection(440,322,"j")); //East Central between HOH and Nigh
+        intersections.add(new Intersection(418,325,"k")); //East Connection to HOH East Entrances
+        intersections.add(new Intersection(418,370,"l")); //South of above intersection
+        intersections.add(new Intersection(280,259,"m")); //West of HOH NW Entrance
+        intersections.add(new Intersection(301,322,"n")); //West side of HOH down stairs towards W HOH Entrances
         //Setup Paths
         paths.add(new Path(intersections.get(0),cmsc.entrances.get(0))); //Path from CMSC North Entrance up
         paths.add(new Path(intersections.get(0),intersections.get(1))); //E/W Path above CMSC
@@ -83,6 +84,38 @@ class aWindow extends JFrame {
         paths.add(new Path(intersections.get(12),hoh.entrances.get(2)));
         paths.add(new Path(intersections.get(12),hoh.entrances.get(3)));
         paths.add(new Stairs(intersections.get(2),intersections.get(12)));
+        
+       /* Path toEntrance = null;
+        if(start.x <cmsc.x+cmsc.width && start.x >cmsc.x && start.y>cmsc.y && start.y<cmsc.y+cmsc.height){
+            for(Entrance e : cmsc.entrances){
+                Path temp = new Path(start, e);
+                if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
+                    toEntrance = temp;
+                }
+            }
+        }
+        */
+        ArrayList<Building> buildings = new ArrayList<>();
+        buildings.add(cmsc);
+        buildings.add(hoh);
+        ArrayList<Entrance> entrances = new ArrayList<>();
+        for(Building b : buildings){
+            entrances.addAll(b.entrances);
+        }
+        
+        ArrayList<Node> nodes = new ArrayList<>();
+        nodes.addAll(entrances);
+        nodes.addAll(intersections);
+        Navigator navi = new Navigator(nodes,paths);
+        navi.execute(cmsc.entrances.get(0));
+        LinkedList<Node> route = navi.getPath(hoh.entrances.get(1));
+        
+        if(route !=null){
+            for(Node n: route){
+                System.out.println(n.id);
+                System.out.println("");
+            }
+        }
     }
         
     /*

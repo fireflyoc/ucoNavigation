@@ -14,9 +14,10 @@ import java.util.ArrayList;
 public class Intersection extends Node{
     ArrayList<Path> routes;
     
-    public Intersection(int x0, int y0){
+    public Intersection(int x0, int y0, String i){
         x=x0;
         y=y0;
+        id=i;
     }
     
     public void addPath(Path p){

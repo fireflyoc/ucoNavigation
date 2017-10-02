@@ -13,8 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.swing.JButton;
@@ -61,14 +59,14 @@ class aWindow extends JFrame {
         nigh = new Building(75,230,460,140);
         music = new Building(100,80,260,140);
         //Setup Entrances
-        cmsc.addEntrance(new Entrance(310,400,"CMSC North")); //CMSC North
-        cmsc.addEntrance(new Entrance(290,444,"CMSC West")); //CMSC West
-        hoh.addEntrance(new Entrance(406,327,"HOH South East")); //HOH South East
-        hoh.addEntrance(new Entrance(388,298,"HOH North East")); //HOH North East
-        hoh.addEntrance(new Entrance(301,325,"HOH South West")); //HOH South West -- Stairs
-        hoh.addEntrance(new Entrance(328,295,"HOH West Central")); //HOH West Central -- Stairs 
-        hoh.addEntrance(new Entrance(365,256,"HOH  North Central")); //HOH  North Central
-        hoh.addEntrance(new Entrance(297,259,"HOH North West")); //HOH North West
+        cmsc.addEntrance(new Entrance(310,400,"CMSC North Entrance")); //CMSC North
+        cmsc.addEntrance(new Entrance(290,444,"CMSC West Entrance")); //CMSC West
+        hoh.addEntrance(new Entrance(406,327,"HOH South East Entrance")); //HOH South East
+        hoh.addEntrance(new Entrance(388,298,"HOH North East Entrance")); //HOH North East
+        hoh.addEntrance(new Entrance(301,325,"HOH South West Entrance")); //HOH South West -- Stairs
+        hoh.addEntrance(new Entrance(328,295,"HOH West Central Entrance")); //HOH West Central -- Stairs 
+        hoh.addEntrance(new Entrance(365,256,"HOH  North Central Entrance")); //HOH  North Central
+        hoh.addEntrance(new Entrance(297,259,"HOH North West Entrance")); //HOH North West
         //Setup Intersections
         intersections.add(new Intersection(310,375,"a")); //Above CMSC North Entrance
         intersections.add(new Intersection(280,375,"b")); //North of CMSC East and West of above intersection

@@ -180,11 +180,15 @@ class aWindow extends JFrame {
         if(route !=null){
             Graphics g = getGraphics();
             String r = "";
-            for(Node n: route){
-                r+=n.id+" > ";
-                g.setColor(Color.BLUE);
-                g.drawString(n.id, n.x, n.y+30);
-                System.out.println(n.id);
+            for(int i=0; i<route.size();i++){
+                g.setColor(Color.GREEN);
+                r+=route.get(i).id;
+                if(i+1<route.size()){
+                    r+=" > ";
+                    g.drawLine(route.get(i).x, route.get(i).y+25, route.get(i+1).x, route.get(i+1).y+25);
+                }
+                //g.drawString(route.get(i).id, route.get(i).x, route.get(i).y+30);
+                System.out.println(route.get(i).id);
             }
             text.setText(r);
         } else{

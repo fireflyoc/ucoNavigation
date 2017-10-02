@@ -111,13 +111,18 @@ class aWindow extends JFrame {
         paths.add(new Path(hoh.entrances.get(2),intersections.get(12)));
         paths.add(new Path(hoh.entrances.get(3),intersections.get(12)));
         paths.add(new Path(hoh.entrances.get(4),intersections.get(4)));
+        paths.add(new Path(intersections.get(1),intersections.get(0)));
         
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                start=finish=null;
+                start=null;
+                finish=null;
                 text.setText("");
                 repaint();
+                toEntrance=null;
+                toEnd=null;
+                System.out.println("Reset");
             }
         });
         

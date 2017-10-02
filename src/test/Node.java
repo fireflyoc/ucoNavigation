@@ -11,5 +11,5 @@ package test;
  */
 public class Node {
     int x,y;
-    String id;    
+    String id;
 }

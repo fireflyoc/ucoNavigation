@@ -5,14 +5,22 @@
  */
 package test;
 
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -22,10 +30,15 @@ class aWindow extends JFrame {
     
     ArrayList<Path> paths;
     ArrayList<Intersection> intersections;
-    JPanel panel;
+    JPanel panel, bottomPanel;
     Node start, finish;
     int x,y=0;
     ArrayList<Path> finalPath;
+    Path toEntrance = null, toEnd=null;
+    Building cmsc, hoh, nigh, music;
+    JTextField text;
+    JButton reset;
+
 
     public aWindow() {
         Container contentPane = getContentPane();
@@ -34,11 +47,19 @@ class aWindow extends JFrame {
         panel = new ImagePanel();
         contentPane.add(panel, "Center");
         panel.addMouseListener(new MouseController());
+        text = new JTextField();
+        text.setPreferredSize(new Dimension(500,25));
+        text.setEditable(false);
+        bottomPanel = new JPanel();
+        reset = new JButton("Reset");
+        bottomPanel.add(text);
+        bottomPanel.add(reset);
+        contentPane.add(bottomPanel, "South");
         //Setup buildings
-        Building cmsc = new Building(65,90,285,400);
-        Building hoh = new Building(120,110,290,240);
-        Building nigh = new Building(75,230,460,140);
-        Building music = new Building(100,80,260,140);
+        cmsc = new Building(65,90,285,400);
+        hoh = new Building(120,110,290,240);
+        nigh = new Building(75,230,460,140);
+        music = new Building(100,80,260,140);
         //Setup Entrances
         cmsc.addEntrance(new Entrance(310,400,"CMSC North")); //CMSC North
         cmsc.addEntrance(new Entrance(290,444,"CMSC West")); //CMSC West
@@ -84,8 +105,27 @@ class aWindow extends JFrame {
         paths.add(new Path(intersections.get(12),hoh.entrances.get(2)));
         paths.add(new Path(intersections.get(12),hoh.entrances.get(3)));
         paths.add(new Stairs(intersections.get(2),intersections.get(12)));
+        paths.add(new Path(cmsc.entrances.get(0),intersections.get(0)));
+        paths.add(new Path(cmsc.entrances.get(1),intersections.get(1)));
+        paths.add(new Path(hoh.entrances.get(0),intersections.get(9)));
+        paths.add(new Path(hoh.entrances.get(1),intersections.get(6)));
+        paths.add(new Path(hoh.entrances.get(5),intersections.get(11)));
+        paths.add(new Path(hoh.entrances.get(2),intersections.get(12)));
+        paths.add(new Path(hoh.entrances.get(3),intersections.get(12)));
+        paths.add(new Path(hoh.entrances.get(4),intersections.get(4)));
         
-       /* Path toEntrance = null;
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                start=finish=null;
+                text.setText("");
+                repaint();
+            }
+        });
+        
+    }
+    
+    public void setStart(){
         if(start.x <cmsc.x+cmsc.width && start.x >cmsc.x && start.y>cmsc.y && start.y<cmsc.y+cmsc.height){
             for(Entrance e : cmsc.entrances){
                 Path temp = new Path(start, e);
@@ -93,8 +133,35 @@ class aWindow extends JFrame {
                     toEntrance = temp;
                 }
             }
+        } else if(start.x <hoh.x+hoh.width && start.x >hoh.x && start.y>hoh.y && start.y<hoh.y+hoh.height){
+            for(Entrance e : hoh.entrances){
+                Path temp = new Path(start, e);
+                if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
+                    toEntrance = temp;
+                }
+            }
         }
-        */
+    }
+    
+    public void setEnd(){
+        if(finish.x <cmsc.x+cmsc.width && finish.x >cmsc.x && finish.y>cmsc.y && finish.y<cmsc.y+cmsc.height){
+            for(Entrance e : cmsc.entrances){
+                Path temp = new Path(finish, e);
+                if(toEnd == null || temp.getLength()<toEnd.getLength()){
+                    toEnd = temp;
+                }
+            }
+        } else if(finish.x <hoh.x+hoh.width && finish.x >hoh.x && finish.y>hoh.y && finish.y<hoh.y+hoh.height){
+            for(Entrance e : hoh.entrances){
+                Path temp = new Path(finish, e);
+                if(toEnd == null || temp.getLength()<toEnd.getLength()){
+                    toEnd = temp;
+                }
+            }
+        }
+    }
+    
+    public void search(){
         ArrayList<Building> buildings = new ArrayList<>();
         buildings.add(cmsc);
         buildings.add(hoh);
@@ -107,17 +174,54 @@ class aWindow extends JFrame {
         nodes.addAll(entrances);
         nodes.addAll(intersections);
         Navigator navi = new Navigator(nodes,paths);
-        navi.execute(cmsc.entrances.get(0));
-        LinkedList<Node> route = navi.getPath(hoh.entrances.get(1));
+        navi.execute(toEntrance.getDestination());
+        LinkedList<Node> route = navi.getPath(toEnd.getDestination());
         
         if(route !=null){
+            Graphics g = getGraphics();
+            String r = "";
             for(Node n: route){
+                r+=n.id+" > ";
+                g.setColor(Color.BLUE);
+                g.drawString(n.id, n.x, n.y+30);
                 System.out.println(n.id);
-                System.out.println("");
             }
+            text.setText(r);
+        } else{
+            System.out.println("Route is null.");
         }
     }
         
+    
+    
+    class MouseController implements MouseListener{
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("X: "+e.getX()+"\nY: "+e.getY());
+        if(start == null) {
+            start = new Intersection(e.getX(), e.getY(),"Start");
+            setStart();
+        }
+        else if(finish == null) {
+            finish = new Intersection(e.getX(), e.getY(),"End");
+            setEnd();
+            search();
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {    }
+}
     /*
     Determine which pixels encompass stairs, buildings, entrances, or impasses
     stairs next to nigh center on west side

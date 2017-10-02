@@ -18,7 +18,7 @@ public class Test {
      */
     public static void main(String[] args) {
         JFrame window = new aWindow();
-        window.setSize(950,550);
+        window.setSize(860,600);
         window.setLocation(100,100);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);

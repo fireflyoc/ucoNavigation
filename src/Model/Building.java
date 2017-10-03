@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package Model;
 
 import java.util.ArrayList;
 
@@ -14,11 +14,8 @@ import java.util.ArrayList;
 public class Building extends Node{
     
     int width, height; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
-    ArrayList<Entrance> entrances;
+    public ArrayList<Node> entrances;
     
-    public Building(){
-        width=height=x=y=0;
-    }
     public Building(int w, int h, int x, int y){
         width=w;
         height=h;
@@ -29,6 +26,18 @@ public class Building extends Node{
     
     public void addEntrance(Entrance e){
         entrances.add(e);
+    }
+    
+    public Node getEntranceAt(int i){
+        return entrances.get(i);
+    }
+    
+    public int getW(){
+        return width;
+    }
+    
+    public int getH(){
+        return height;
     }
     
 }

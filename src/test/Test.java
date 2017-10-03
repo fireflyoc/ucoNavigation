@@ -5,6 +5,7 @@
  */
 package test;
 
+import Control.NodeManager;
 import javax.swing.JFrame;
 
 /**
@@ -17,7 +18,7 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        JFrame window = new aWindow();
+        JFrame window = new NodeManager();
         window.setSize(860,600);
         window.setLocation(100,100);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,10 +1,16 @@
+package Control;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
 
+
+import Model.Stairs;
+import Model.Building;
+import Model.Node;
+import Model.Path;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -24,10 +30,10 @@ import javax.swing.JTextField;
  *
  * @author Noah G
  */
-class aWindow extends JFrame {
+public class NodeManager extends JFrame {
     
     ArrayList<Path> paths;
-    ArrayList<Intersection> intersections;
+    ArrayList<Node> intersections;
     JPanel panel, bottomPanel;
     Node start, finish;
     int x,y=0;
@@ -38,7 +44,7 @@ class aWindow extends JFrame {
     JButton reset;
 
 
-    public aWindow() {
+    public NodeManager() {
         Container contentPane = getContentPane();
         paths = new ArrayList<>();
         intersections = new ArrayList<>();
@@ -59,58 +65,58 @@ class aWindow extends JFrame {
         nigh = new Building(75,230,460,140);
         music = new Building(100,80,260,140);
         //Setup Entrances
-        cmsc.addEntrance(new Entrance(310,400,"CMSC North Entrance")); //CMSC North
-        cmsc.addEntrance(new Entrance(290,444,"CMSC West Entrance")); //CMSC West
-        hoh.addEntrance(new Entrance(406,327,"HOH South East Entrance")); //HOH South East
-        hoh.addEntrance(new Entrance(388,298,"HOH North East Entrance")); //HOH North East
-        hoh.addEntrance(new Entrance(301,325,"HOH South West Entrance")); //HOH South West -- Stairs
-        hoh.addEntrance(new Entrance(328,295,"HOH West Central Entrance")); //HOH West Central -- Stairs 
-        hoh.addEntrance(new Entrance(365,256,"HOH  North Central Entrance")); //HOH  North Central
-        hoh.addEntrance(new Entrance(297,259,"HOH North West Entrance")); //HOH North West
-        //Setup Intersections
-        intersections.add(new Intersection(310,375,"a")); //Above CMSC North Entrance
-        intersections.add(new Intersection(280,375,"b")); //North of CMSC East and West of above intersection
-        intersections.add(new Intersection(280,320,"c")); //Above previous on the West side of HOH
-        intersections.add(new Intersection(280,232,"d")); //NW Corner of HOH
-        intersections.add(new Intersection(360,232,"e")); //North Central of HOH
-        intersections.add(new Intersection(375,232,"f")); //North Central of HOH, slightly to East of above
-        intersections.add(new Intersection(442,250,"g")); //NE Corner of HOH, between Nigh and HOH
-        intersections.add(new Intersection(442,375,"h")); //South East corner of HOH
-        intersections.add(new Intersection(440,322,"j")); //East Central between HOH and Nigh
-        intersections.add(new Intersection(418,325,"k")); //East Connection to HOH East Entrances
-        intersections.add(new Intersection(418,370,"l")); //South of above intersection
-        intersections.add(new Intersection(280,259,"m")); //West of HOH NW Entrance
-        intersections.add(new Intersection(301,322,"n")); //West side of HOH down stairs towards W HOH Entrances
+        cmsc.addEntrance(new Node(310,400,"CMSC North Entrance")); //CMSC North
+        cmsc.addEntrance(new Node(290,444,"CMSC West Entrance")); //CMSC West
+        hoh.addEntrance(new Node(406,327,"HOH South East Entrance")); //HOH South East
+        hoh.addEntrance(new Node(388,298,"HOH North East Entrance")); //HOH North East
+        hoh.addEntrance(new Node(301,325,"HOH South West Entrance")); //HOH South West -- Stairs
+        hoh.addEntrance(new Node(328,295,"HOH West Central Entrance")); //HOH West Central -- Stairs 
+        hoh.addEntrance(new Node(365,256,"HOH  North Central Entrance")); //HOH  North Central
+        hoh.addEntrance(new Node(297,259,"HOH North West Entrance")); //HOH North West
+        //Setup Nodes
+        intersections.add(new Node(310,375,"a")); //Above CMSC North Entrance
+        intersections.add(new Node(280,375,"b")); //North of CMSC East and West of above intersection
+        intersections.add(new Node(280,320,"c")); //Above previous on the West side of HOH
+        intersections.add(new Node(280,232,"d")); //NW Corner of HOH
+        intersections.add(new Node(360,232,"e")); //North Central of HOH
+        intersections.add(new Node(375,232,"f")); //North Central of HOH, slightly to East of above
+        intersections.add(new Node(442,250,"g")); //NE Corner of HOH, between Nigh and HOH
+        intersections.add(new Node(442,375,"h")); //South East corner of HOH
+        intersections.add(new Node(440,322,"j")); //East Central between HOH and Nigh
+        intersections.add(new Node(418,325,"k")); //East Connection to HOH East Entrances
+        intersections.add(new Node(418,370,"l")); //South of above intersection
+        intersections.add(new Node(280,259,"m")); //West of HOH NW Entrance
+        intersections.add(new Node(301,322,"n")); //West side of HOH down stairs towards W HOH Entrances
         //Setup Paths
-        paths.add(new Path(intersections.get(0),cmsc.entrances.get(0))); //Path from CMSC North Entrance up
+        paths.add(new Path(intersections.get(0),cmsc.getEntranceAt(0))); //Path from CMSC North Entrance up
         paths.add(new Path(intersections.get(0),intersections.get(1))); //E/W Path above CMSC
-        paths.add(new Path(intersections.get(1),cmsc.entrances.get(1))); //Path from CMSC East Entrance up
+        paths.add(new Path(intersections.get(1),cmsc.getEntranceAt(1))); //Path from CMSC East Entrance up
         paths.add(new Path(intersections.get(1),intersections.get(2))); //Path heading North along West side of HOH
         paths.add(new Path(intersections.get(2),intersections.get(11))); //Path heading North along West side of HOH
         paths.add(new Path(intersections.get(3),intersections.get(4))); //Path heading East along North side of HOH
         paths.add(new Path(intersections.get(4),intersections.get(5))); //Short path heading East along North Side of HOH
-        paths.add(new Path(intersections.get(4),hoh.entrances.get(4))); //Path from North side of HOH to NC entrance
+        paths.add(new Path(intersections.get(4),hoh.getEntranceAt(4))); //Path from North side of HOH to NC entrance
         paths.add(new Path(intersections.get(5),intersections.get(6))); //Diaganol path on NE side of HOH
         paths.add(new Path(intersections.get(6),intersections.get(8))); //Path South between Nigh and HOH
         paths.add(new Path(intersections.get(8),intersections.get(7))); //Path South between Nigh and HOH
         paths.add(new Path(intersections.get(8),intersections.get(9))); //Path East towards East HOH Entrances
         paths.add(new Path(intersections.get(9),intersections.get(10))); //Path South from East HOH Entrances
         paths.add(new Path(intersections.get(10),intersections.get(0))); //Path East between HOH and CMSC
-        paths.add(new Path(intersections.get(9),hoh.entrances.get(0)));
-        paths.add(new Path(intersections.get(6),hoh.entrances.get(1)));
+        paths.add(new Path(intersections.get(9),hoh.getEntranceAt(0)));
+        paths.add(new Path(intersections.get(6),hoh.getEntranceAt(1)));
         paths.add(new Path(intersections.get(11),intersections.get(3))); //Path North along West side of HOH to NW corner
-        paths.add(new Path(intersections.get(11),hoh.entrances.get(5)));
-        paths.add(new Path(intersections.get(12),hoh.entrances.get(2)));
-        paths.add(new Path(intersections.get(12),hoh.entrances.get(3)));
+        paths.add(new Path(intersections.get(11),hoh.getEntranceAt(5)));
+        paths.add(new Path(intersections.get(12),hoh.getEntranceAt(2)));
+        paths.add(new Path(intersections.get(12),hoh.getEntranceAt(3)));
         paths.add(new Stairs(intersections.get(2),intersections.get(12)));
-        paths.add(new Path(cmsc.entrances.get(0),intersections.get(0)));
-        paths.add(new Path(cmsc.entrances.get(1),intersections.get(1)));
-        paths.add(new Path(hoh.entrances.get(0),intersections.get(9)));
-        paths.add(new Path(hoh.entrances.get(1),intersections.get(6)));
-        paths.add(new Path(hoh.entrances.get(5),intersections.get(11)));
-        paths.add(new Path(hoh.entrances.get(2),intersections.get(12)));
-        paths.add(new Path(hoh.entrances.get(3),intersections.get(12)));
-        paths.add(new Path(hoh.entrances.get(4),intersections.get(4)));
+        paths.add(new Path(cmsc.getEntranceAt(0),intersections.get(0)));
+        paths.add(new Path(cmsc.getEntranceAt(1),intersections.get(1)));
+        paths.add(new Path(hoh.getEntranceAt(0),intersections.get(9)));
+        paths.add(new Path(hoh.getEntranceAt(1),intersections.get(6)));
+        paths.add(new Path(hoh.getEntranceAt(5),intersections.get(11)));
+        paths.add(new Path(hoh.getEntranceAt(2),intersections.get(12)));
+        paths.add(new Path(hoh.getEntranceAt(3),intersections.get(12)));
+        paths.add(new Path(hoh.getEntranceAt(4),intersections.get(4)));
         paths.add(new Path(intersections.get(1),intersections.get(0)));
         
         reset.addActionListener(new ActionListener() {
@@ -129,14 +135,14 @@ class aWindow extends JFrame {
     }
     
     public void setStart(){
-        if(start.x <cmsc.x+cmsc.width && start.x >cmsc.x && start.y>cmsc.y && start.y<cmsc.y+cmsc.height){
+        if(start.getX() <cmsc.getX()+cmsc.getW() && start.getX() >cmsc.getX() && start.getY()>cmsc.getY() && start.getY()<cmsc.getY()+cmsc.getH()){
             for(Entrance e : cmsc.entrances){
                 Path temp = new Path(start, e);
                 if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
                     toEntrance = temp;
                 }
             }
-        } else if(start.x <hoh.x+hoh.width && start.x >hoh.x && start.y>hoh.y && start.y<hoh.y+hoh.height){
+        } else if(start.getX() <hoh.getX()+hoh.getW() && start.getX() >hoh.getX()&& start.getY()>hoh.getY() && start.getY()<hoh.getY()+hoh.getH()){
             for(Entrance e : hoh.entrances){
                 Path temp = new Path(start, e);
                 if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
@@ -147,14 +153,14 @@ class aWindow extends JFrame {
     }
     
     public void setEnd(){
-        if(finish.x <cmsc.x+cmsc.width && finish.x >cmsc.x && finish.y>cmsc.y && finish.y<cmsc.y+cmsc.height){
+        if(finish.getX() <cmsc.getX()+cmsc.getW() && finish.getX() >cmsc.getX() && finish.getY() >cmsc.getY() && finish.getY()<cmsc.getY()+cmsc.getH()){
             for(Entrance e : cmsc.entrances){
                 Path temp = new Path(finish, e);
                 if(toEnd == null || temp.getLength()<toEnd.getLength()){
                     toEnd = temp;
                 }
             }
-        } else if(finish.x <hoh.x+hoh.width && finish.x >hoh.x && finish.y>hoh.y && finish.y<hoh.y+hoh.height){
+        } else if(finish.getX() <hoh.getX()+hoh.getW() && finish.getX() >hoh.getX() && finish.getY()>hoh.getY() && finish.getY()<hoh.getY()+hoh.getH()){
             for(Entrance e : hoh.entrances){
                 Path temp = new Path(finish, e);
                 if(toEnd == null || temp.getLength()<toEnd.getLength()){
@@ -185,13 +191,13 @@ class aWindow extends JFrame {
             String r = "";
             for(int i=0; i<route.size();i++){
                 g.setColor(Color.GREEN);
-                r+=route.get(i).id;
+                r+=route.get(i).getID();
                 if(i+1<route.size()){
                     r+=" > ";
-                    g.drawLine(route.get(i).x, route.get(i).y+25, route.get(i+1).x, route.get(i+1).y+25);
+                    g.drawLine(route.get(i).getX(), route.get(i).getY()+25, route.get(i+1).getX(), route.get(i+1).getY()+25);
                 }
                 //g.drawString(route.get(i).id, route.get(i).x, route.get(i).y+30);
-                System.out.println(route.get(i).id);
+                System.out.println(route.get(i).getID());
             }
             text.setText(r);
         } else{
@@ -207,11 +213,11 @@ class aWindow extends JFrame {
     public void mouseClicked(MouseEvent e) {
         System.out.println("X: "+e.getX()+"\nY: "+e.getY());
         if(start == null) {
-            start = new Intersection(e.getX(), e.getY(),"Start");
+            start = new Node(e.getX(), e.getY(),"Start");
             setStart();
         }
         else if(finish == null) {
-            finish = new Intersection(e.getX(), e.getY(),"End");
+            finish = new Node(e.getX(), e.getY(),"End");
             setEnd();
             search();
         }

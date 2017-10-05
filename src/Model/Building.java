@@ -11,10 +11,11 @@ import java.util.ArrayList;
  *
  * @author Noah G
  */
-public class Building extends Node{
+public class Building {
     
-    int width, height; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
+    int width, height,x,y; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
     public ArrayList<Node> entrances;
+    public ArrayList<Node> adaEntrances;
     
     public Building(int w, int h, int x, int y){
         width=w;
@@ -22,10 +23,14 @@ public class Building extends Node{
         this.x=x;
         this.y=y;
         entrances = new ArrayList<>();
+        adaEntrances=new ArrayList<>();
     }
     
-    public void addEntrance(Entrance e){
+    public void addEntrance(Node e){
         entrances.add(e);
+        if(e.getADA()){
+            adaEntrances.add(e);
+        }
     }
     
     public Node getEntranceAt(int i){
@@ -38,6 +43,14 @@ public class Building extends Node{
     
     public int getH(){
         return height;
+    }
+    
+    public int getX(){
+        return x;
+    }
+    
+    public int getY(){
+        return y;
     }
     
 }

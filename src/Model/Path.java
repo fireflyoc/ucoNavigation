@@ -20,7 +20,7 @@ public class Path{
     public Path(Node n1, Node n2){
         node1 = n1;
         node2 = n2;
-        length = pow((pow((n1.x-n2.x),2) + pow((n1.y-n2.y),2)),0.5);
+        length = pow((pow((n1.getX()-n2.getX()),2) + pow((n1.getY()-n2.getY()),2)),0.5);
     }
 
     public Node getSource() {

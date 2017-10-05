@@ -16,22 +16,59 @@ public class Node {
     private String id;
     private Boolean ada;
     private Boolean active;
+    
     public int getX(){
         return x;
+    }
+    
+    public void setX(int x){
+        this.x=x;
     }
     
     public int getY(){
         return y;
     }
     
+    public int getType(){
+        return type;
+    }
+    
+    public void setType(int t){
+        this.type=t;
+    }
+    
+    public void setY(int y ){
+        this.y=y;
+    }
+    
     public String getID(){
         return id;
+    }
+    
+    public void setID(String i){
+        this.id=i;
     }
     
     public void setActive(Boolean i){
         active=i;
     }
     
+    public Boolean getADA(){
+        return ada;
+    }
+    
+    public void setADA(Boolean b){
+        ada=b;
+    }
+    
+    public Node(){
+        x=0;
+        y=0;
+        id="";
+        ada=false;
+        active=true;
+        type=-1;
+    }
     public Node(int x, int y, String id, int t, Boolean ada){
         this.x=x;
         this.y=y;

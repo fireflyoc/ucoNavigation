@@ -1,4 +1,10 @@
+<?xml version="1.0"?>
 <Nodes>
-<Node name="id" posx="123" posy="456" type="1" ada="true" active="true"/>
-
+    <Node name="">
+        <posx>123</posx> 
+        <posy>465</posy>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
 </Nodes>

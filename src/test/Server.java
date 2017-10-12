@@ -6,24 +6,21 @@
 package test;
 
 import Control.NodeManager;
-import javax.swing.JFrame;
 
 /**
  *
  * @author Noah G
  */
-public class Test {
+public class Server {
+        private final static int PORT=4444;
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        JFrame window = new NodeManager();
-        window.setSize(860,600);
-        window.setLocation(100,100);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setVisible(true);
-        window.setTitle("");
+    public static void main(String[] args){
+        NodeManager manager = new NodeManager();
+        new WebSeverSocket().start();
+        
     }
     
 }

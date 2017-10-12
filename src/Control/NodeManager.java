@@ -11,12 +11,7 @@ import Model.Stairs;
 import Model.Building;
 import Model.Node;
 import Model.Path;
-import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileInputStream;
@@ -26,10 +21,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventReader;
@@ -48,35 +39,23 @@ import javax.xml.stream.events.XMLEvent;
  *
  * @author Noah G
  */
-public class NodeManager extends JFrame {
-    
+public class NodeManager{
     ArrayList<Path> paths;
     ArrayList<Node> allNodes;
-    JPanel panel, bottomPanel;
     Node start, finish;
     int x,y=0;
     ArrayList<Path> finalPath;
     Path toEntrance = null, toEnd=null;
     Building cmsc, hoh, nigh, music;
     JTextField text;
-    JButton reset;
 
 
     public NodeManager() {
-        Container contentPane = getContentPane();
         paths = new ArrayList<>();
         allNodes = new ArrayList<>();
-        panel = new ImagePanel();
-        contentPane.add(panel, "Center");
-        panel.addMouseListener(new MouseController());
         text = new JTextField();
         text.setPreferredSize(new Dimension(500,25));
         text.setEditable(false);
-        bottomPanel = new JPanel();
-        reset = new JButton("Reset");
-        bottomPanel.add(text);
-        bottomPanel.add(reset);
-        contentPane.add(bottomPanel, "South");
         //Setup buildings
         cmsc = new Building(65,90,285,400);
         hoh = new Building(120,110,290,240);
@@ -140,18 +119,7 @@ public class NodeManager extends JFrame {
         paths.add(new Path(hoh.getEntranceAt(4),allNodes.get(4)));
         paths.add(new Path(allNodes.get(1),allNodes.get(0)));
         
-        reset.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                start=null;
-                finish=null;
-                text.setText("");
-                repaint();
-                toEntrance=null;
-                toEnd=null;
-                System.out.println("Reset");
-            }
-        });
+        
         
     }
     
@@ -208,16 +176,12 @@ public class NodeManager extends JFrame {
         LinkedList<Node> route = navi.getPath(toEnd.getDestination());
         
         if(route !=null){
-            Graphics g = getGraphics();
             String r = "";
             for(int i=0; i<route.size();i++){
-                g.setColor(Color.GREEN);
                 r+=route.get(i).getID();
                 if(i+1<route.size()){
                     r+=" > ";
-                    g.drawLine(route.get(i).getX(), route.get(i).getY()+25, route.get(i+1).getX(), route.get(i+1).getY()+25);
                 }
-                //g.drawString(route.get(i).id, route.get(i).x, route.get(i).y+30);
                 System.out.println(route.get(i).getID());
             }
             text.setText(r);
@@ -344,6 +308,10 @@ public class NodeManager extends JFrame {
         eventWriter.add(eElement);
         eventWriter.add(end);
 
+    }
+
+    public String processInput(String inputLine) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     class MouseController implements MouseListener{

@@ -193,7 +193,9 @@ public class NodeManager{
     private void readXML(){
         try{        
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-            InputStream in = new FileInputStream("node.xml");
+            //Must update nodeXMLPath to the absolute path once moved to CS Server
+            String nodeXMLPath = "C:\\Users\\Noah\\Documents\\NetBeansProjects\\ucoNavigation\\src\\Control\\node.xml";
+            InputStream in = new FileInputStream(nodeXMLPath);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             Node node = null;
             
@@ -310,9 +312,7 @@ public class NodeManager{
 
     }
 
-    public String processInput(String inputLine) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     
     class MouseController implements MouseListener{
 

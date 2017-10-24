@@ -5,6 +5,7 @@
  */
 package test;
 
+import Control.JSONReader;
 import java.net.InetSocketAddress;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +22,8 @@ class WebSeverSocket extends WebSocketServer{
     private static int TCP_PORT = 4444;
 
     private Set<WebSocket> conns;
+    
+    private JSONReader reader;
 
     public WebSeverSocket() {
         super(new InetSocketAddress(TCP_PORT));
@@ -41,6 +44,8 @@ class WebSeverSocket extends WebSocketServer{
 
     @Override
     public void onMessage(WebSocket conn, String message) {
+        reader = new JSONReader();
+        reader.parseUserInput(message);
         System.out.println("Message from client: " + message);
         for (WebSocket sock : conns) {
             sock.send(message);

@@ -1,4 +1,4 @@
-package Control;
+package Se2ServerTester;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 /**
- * Created by Decker on 10/12/2017. repsonsible for parsing and storing the JSON
+ * Created by Decker on 10/12/2017. responsible for parsing and storing the JSON
  * data
  */
 public class JSONReader {
@@ -18,77 +18,60 @@ public class JSONReader {
     //constructor - takes a raw JSON data string
     public JSONReader(String dataString) {
         jsonMap = new HashMap<>();
+        System.out.println("JSONreader Recieved: " + dataString);
         this.dataString = dataString;
 
-        parseData();
+        parseUserInput();
 
     }//end constructor
 
-    private void parseData() {
+    private void parseUserInput() {
 
         try {
-            JSONObject jsonObject = new JSONObject(dataString);
-            
-//            
-//            {
-//      "marker": [
+           
+//recieved string must be in this format: 
+//{
+//      "route":[
 //         {  
 //            "name":  "start",
-//             "lat": double,
-//             "lon": double
+//             "lat": "double",
+//             "lon": "double"
 //          },
 //         {  
 //            "name":  "end",
-//             "lat": double,
-//             "lon": double
+//             "lat": "double",
+//             "lon": "double"
 //          }
 //         ]
-//}
+//    
+//      "ada":"true"
+//}            
+
+ JSONObject jsonObject = new JSONObject(dataString);
+            JSONArray routeArray = jsonObject.getJSONArray("route");
+            JSONObject obj = routeArray.getJSONObject(0);
+
+            if (obj != null) {
+                jsonMap.put("startNode", obj.getString("name"));
+                jsonMap.put("startLat", obj.getString("lat"));
+                jsonMap.put("startLon", obj.getString("lon"));
+            } else {
+                System.err.println("could not read route array 0");
+            }
+
+            obj = routeArray.getJSONObject(1);
+
+            if (obj != null) {
+                jsonMap.put("endNode", obj.getString("name"));
+                jsonMap.put("endLat", obj.getString("lat"));
+                jsonMap.put("endLon", obj.getString("lon"));
+            } else {
+                System.err.println("could not read route array 1");
+            }
+
+           
+            jsonMap.put("ada", jsonObject.getString("ada"));
             
-            
-           String marker = jsonObject.getString("marker");
-//
-//            if (cod != null) {
-//
-//                jsonMap.put("cod", cod);
-//                //get sys
-//                JSONObject sys = jsonObject.getJSONObject("sys");
-//                if (sys != null) {
-//                    jsonMap.put("sys", sys.getString("country"));
-//
-//                }
-//                //get coord
-//                JSONObject coord = jsonObject.getJSONObject("coord");
-//                if (coord != null) {
-//                    jsonMap.put("lat", coord.getString("lat"));
-//                    jsonMap.put("lon", coord.getString("lon"));
-//                }
-//                //get weather array
-//                JSONArray weather = jsonObject.getJSONArray("weather");
-//                if (weather != null) {
-//                    for (int i = 0; i < weather.length(); i++) {
-//                        JSONObject thisWeather = weather.getJSONObject(i);
-//                        jsonMap.put("main", thisWeather.getString("main"));
-//                        jsonMap.put("description", thisWeather.getString("description"));
-//                    }
-//                }
-//                //getTemp
-//                JSONObject main = jsonObject.getJSONObject("main");
-//                if (main != null) {
-//                    jsonMap.put("temp", main.getString("temp"));
-//                }
-//
-//                //getWind inf
-//                JSONObject wind = jsonObject.getJSONObject("wind");
-//                if (wind != null) {
-//                    jsonMap.put("windSpeed", wind.getString("speed"));
-//                    jsonMap.put("windDeg", wind.getString("deg"));
-//                }
-//
-//            }
-
-
-
         } catch (JSONException e) {
             e.printStackTrace();
 

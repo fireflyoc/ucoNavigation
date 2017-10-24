@@ -12,42 +12,12 @@ import java.util.HashMap;
  */
 public class JSONReader {
 
-    private String dataString;
-    private HashMap<String, String> jsonMap;
+    public HashMap<String, String> parseUserInput(String dataString) {
 
-    //constructor - takes a raw JSON data string
-    public JSONReader(String dataString) {
-        jsonMap = new HashMap<>();
-        System.out.println("JSONreader Recieved: " + dataString);
-        this.dataString = dataString;
-
-        parseUserInput();
-
-    }//end constructor
-
-    private void parseUserInput() {
-
+        HashMap<String, String> jsonMap = new HashMap<>();
         try {
-           
-//recieved string must be in this format: 
-//{
-//      "route":[
-//         {  
-//            "name":  "start",
-//             "lat": "double",
-//             "lon": "double"
-//          },
-//         {  
-//            "name":  "end",
-//             "lat": "double",
-//             "lon": "double"
-//          }
-//         ]
-//    
-//      "ada":"true"
-//}            
 
- JSONObject jsonObject = new JSONObject(dataString);
+            JSONObject jsonObject = new JSONObject(dataString);
             JSONArray routeArray = jsonObject.getJSONArray("route");
             JSONObject obj = routeArray.getJSONObject(0);
 
@@ -69,18 +39,14 @@ public class JSONReader {
                 System.err.println("could not read route array 1");
             }
 
-           
             jsonMap.put("ada", jsonObject.getString("ada"));
-            
+
         } catch (JSONException e) {
             e.printStackTrace();
 
         }
 
-    } //end parse Data
-
-    public HashMap<String, String> getDataMap() {
         return jsonMap;
-    }
+    } //end parse Data
 
 } //end Class

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <Nodes>
     <Node name="">
-        <posx>123</posx> 
-        <posy>465</posy>
+        <lat>123</lat> 
+        <lon>465</lon>
         <type>1</type>
         <ada>true</ada>
         <active>true</active>

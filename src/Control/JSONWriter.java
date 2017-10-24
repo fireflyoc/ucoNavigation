@@ -17,6 +17,8 @@ public class JSONWriter {
    public String convertListToJsonArray(LinkedList<Node> list){
        String output = "";
        
+       
+       
        return output;
    } //end 
 

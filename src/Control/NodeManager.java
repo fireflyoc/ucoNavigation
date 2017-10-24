@@ -122,43 +122,43 @@ public class NodeManager{
         
         
     }
-    
-    public void setStart(){
-        if(start.getX() <cmsc.getX()+cmsc.getW() && start.getX() >cmsc.getX() && start.getY()>cmsc.getY() && start.getY()<cmsc.getY()+cmsc.getH()){
-            for(Node e : cmsc.entrances){
-                Path temp = new Path(start, e);
-                if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
-                    toEntrance = temp;
-                }
-            }
-        } else if(start.getX() <hoh.getX()+hoh.getW() && start.getX() >hoh.getX()&& start.getY()>hoh.getY() && start.getY()<hoh.getY()+hoh.getH()){
-            for(Node e : hoh.entrances){
-                Path temp = new Path(start, e);
-                if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
-                    toEntrance = temp;
-                }
-            }
-        }
-    }
-    
-    public void setEnd(){
-        if(finish.getX() <cmsc.getX()+cmsc.getW() && finish.getX() >cmsc.getX() && finish.getY() >cmsc.getY() && finish.getY()<cmsc.getY()+cmsc.getH()){
-            for(Node e : cmsc.entrances){
-                Path temp = new Path(finish, e);
-                if(toEnd == null || temp.getLength()<toEnd.getLength()){
-                    toEnd = temp;
-                }
-            }
-        } else if(finish.getX() <hoh.getX()+hoh.getW() && finish.getX() >hoh.getX() && finish.getY()>hoh.getY() && finish.getY()<hoh.getY()+hoh.getH()){
-            for(Node e : hoh.entrances){
-                Path temp = new Path(finish, e);
-                if(toEnd == null || temp.getLength()<toEnd.getLength()){
-                    toEnd = temp;
-                }
-            }
-        }
-    }
-    
+//    
+//    public void setStart(){
+//        if(start.getX() <cmsc.getX()+cmsc.getW() && start.getX() >cmsc.getX() && start.getY()>cmsc.getY() && start.getY()<cmsc.getY()+cmsc.getH()){
+//            for(Node e : cmsc.entrances){
+//                Path temp = new Path(start, e);
+//                if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
+//                    toEntrance = temp;
+//                }
+//            }
+//        } else if(start.getX() <hoh.getX()+hoh.getW() && start.getX() >hoh.getX()&& start.getY()>hoh.getY() && start.getY()<hoh.getY()+hoh.getH()){
+//            for(Node e : hoh.entrances){
+//                Path temp = new Path(start, e);
+//                if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
+//                    toEntrance = temp;
+//                }
+//            }
+//        }
+//    }
+//    
+//    public void setEnd(){
+//        if(finish.getX() <cmsc.getX()+cmsc.getW() && finish.getX() >cmsc.getX() && finish.getY() >cmsc.getY() && finish.getY()<cmsc.getY()+cmsc.getH()){
+//            for(Node e : cmsc.entrances){
+//                Path temp = new Path(finish, e);
+//                if(toEnd == null || temp.getLength()<toEnd.getLength()){
+//                    toEnd = temp;
+//                }
+//            }
+//        } else if(finish.getX() <hoh.getX()+hoh.getW() && finish.getX() >hoh.getX() && finish.getY()>hoh.getY() && finish.getY()<hoh.getY()+hoh.getH()){
+//            for(Node e : hoh.entrances){
+//                Path temp = new Path(finish, e);
+//                if(toEnd == null || temp.getLength()<toEnd.getLength()){
+//                    toEnd = temp;
+//                }
+//            }
+//        }
+//    }
+//    
     public void search(){
         ArrayList<Building> buildings = new ArrayList<>();
         buildings.add(cmsc);
@@ -216,15 +216,15 @@ public class NodeManager{
                     }
 
                     if (event.isStartElement()) {
-                        if (event.asStartElement().getName().getLocalPart().equals("posx")) {
+                        if (event.asStartElement().getName().getLocalPart().equals("lat")) {
                             event = eventReader.nextEvent();
-                            node.setX(Integer.parseInt(event.asCharacters().getData()));
+                            node.setLat(Integer.parseInt(event.asCharacters().getData()));
                             continue;
                         }
                     }
-                    if (event.asStartElement().getName().getLocalPart().equals("posy")) {
+                    if (event.asStartElement().getName().getLocalPart().equals("lon")) {
                         event = eventReader.nextEvent();
-                        node.setY(Integer.parseInt(event.asCharacters().getData()));
+                        node.setLon(Integer.parseInt(event.asCharacters().getData()));
                         continue;
                     }
                     
@@ -314,39 +314,5 @@ public class NodeManager{
 
     
     
-    class MouseController implements MouseListener{
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        System.out.println("X: "+e.getX()+"\nY: "+e.getY());
-        if(start == null) {
-            //start = new Node(e.getX(), e.getY(),"Start");
-            setStart();
-        }
-        else if(finish == null) {
-            //finish = new Node(e.getX(), e.getY(),"End");
-            setEnd();
-            search();
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {    }
-}
-    /*
-    Determine which pixels encompass stairs, buildings, entrances, or impasses
-    stairs next to nigh center on west side
-    road between HOH and CMS buildings is an impass due to construction
     
-    */
-    
-}
+}//end NodeManager

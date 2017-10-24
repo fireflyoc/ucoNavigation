@@ -9,16 +9,16 @@ import java.util.LinkedList;
  */
 public class JSONWriter {
 
-    //empty contructor
-   public JSONWriter(){
-   
-   }
-    
    public String convertListToJsonArray(LinkedList<Node> list){
-       String output = "";
+     String output = "{\"userPath\":[";
        
-       
-       
+       for(Node n: list){
+           output+="{\"id\":\""+n.getID()+"\",";
+           output+="\"lat\":\""+n.getLat()+"\",";
+           output+="\"lon\":\""+n.getLon()+"\"},";
+       } //end for loop
+       output = output.substring(0, output.length()-1);
+       output +="]}";
        return output;
    } //end 
 

@@ -12,23 +12,36 @@ package Model;
 
 public class Node {
     public static final int ENTRANCE=0, INTERSECTION=1;
-    private int x,y, type;
+    private int type;
+    private double lat, lon;
     private String id;
     private Boolean ada;
     private Boolean active;
     
-    public int getX(){
-        return x;
+ 
+    public Node(){
+        lon=0;
+        lat=0;
+        id="";
+        ada=false;
+        active=true;
+        type=-1;
     }
     
-    public void setX(int x){
-        this.x=x;
+    public Node(double lat, double lon, String id, int t, Boolean ada){
+        this.lat=lat;
+        this.lon=lon;
+        this.id=id;
+        type=t;
+        this.ada=ada;
+        active=true;
     }
     
-    public int getY(){
-        return y;
+    public Node getNode(){
+        return this;
     }
     
+ 
     public int getType(){
         return type;
     }
@@ -36,11 +49,7 @@ public class Node {
     public void setType(int t){
         this.type=t;
     }
-    
-    public void setY(int y ){
-        this.y=y;
-    }
-    
+      
     public String getID(){
         return id;
     }
@@ -61,24 +70,33 @@ public class Node {
         ada=b;
     }
     
-    public Node(){
-        x=0;
-        y=0;
-        id="";
-        ada=false;
-        active=true;
-        type=-1;
-    }
-    public Node(int x, int y, String id, int t, Boolean ada){
-        this.x=x;
-        this.y=y;
-        this.id=id;
-        type=t;
-        this.ada=ada;
-        active=true;
-    }
     
-    public Node getNode(){
-        return this;
+
+    /**
+     * @return the lat
+     */
+    public double getLat() {
+        return lat;
+    }
+
+    /**
+     * @param lat the lat to set
+     */
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    /**
+     * @return the lon
+     */
+    public double getLon() {
+        return lon;
+    }
+
+    /**
+     * @param lon the lon to set
+     */
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 }

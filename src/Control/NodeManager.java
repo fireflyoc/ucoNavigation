@@ -122,43 +122,29 @@ public class NodeManager{
         
         
     }
-//    
-//    public void setStart(){
-//        if(start.getX() <cmsc.getX()+cmsc.getW() && start.getX() >cmsc.getX() && start.getY()>cmsc.getY() && start.getY()<cmsc.getY()+cmsc.getH()){
-//            for(Node e : cmsc.entrances){
-//                Path temp = new Path(start, e);
-//                if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
-//                    toEntrance = temp;
-//                }
-//            }
-//        } else if(start.getX() <hoh.getX()+hoh.getW() && start.getX() >hoh.getX()&& start.getY()>hoh.getY() && start.getY()<hoh.getY()+hoh.getH()){
-//            for(Node e : hoh.entrances){
-//                Path temp = new Path(start, e);
-//                if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
-//                    toEntrance = temp;
-//                }
-//            }
-//        }
-//    }
-//    
-//    public void setEnd(){
-//        if(finish.getX() <cmsc.getX()+cmsc.getW() && finish.getX() >cmsc.getX() && finish.getY() >cmsc.getY() && finish.getY()<cmsc.getY()+cmsc.getH()){
-//            for(Node e : cmsc.entrances){
-//                Path temp = new Path(finish, e);
-//                if(toEnd == null || temp.getLength()<toEnd.getLength()){
-//                    toEnd = temp;
-//                }
-//            }
-//        } else if(finish.getX() <hoh.getX()+hoh.getW() && finish.getX() >hoh.getX() && finish.getY()>hoh.getY() && finish.getY()<hoh.getY()+hoh.getH()){
-//            for(Node e : hoh.entrances){
-//                Path temp = new Path(finish, e);
-//                if(toEnd == null || temp.getLength()<toEnd.getLength()){
-//                    toEnd = temp;
-//                }
-//            }
-//        }
-//    }
-//    
+    
+    public void setStart(double lat, double lon){
+        
+    }
+    
+    public void setEnd(double lat, double lon){
+        if(finish.getX() <cmsc.getX()+cmsc.getW() && finish.getX() >cmsc.getX() && finish.getY() >cmsc.getY() && finish.getY()<cmsc.getY()+cmsc.getH()){
+            for(Node e : cmsc.entrances){
+                Path temp = new Path(finish, e);
+                if(toEnd == null || temp.getLength()<toEnd.getLength()){
+                    toEnd = temp;
+                }
+            }
+        } else if(finish.getX() <hoh.getX()+hoh.getW() && finish.getX() >hoh.getX() && finish.getY()>hoh.getY() && finish.getY()<hoh.getY()+hoh.getH()){
+            for(Node e : hoh.entrances){
+                Path temp = new Path(finish, e);
+                if(toEnd == null || temp.getLength()<toEnd.getLength()){
+                    toEnd = temp;
+                }
+            }
+        }
+    }
+    
     public void search(){
         ArrayList<Building> buildings = new ArrayList<>();
         buildings.add(cmsc);

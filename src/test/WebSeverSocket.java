@@ -6,7 +6,9 @@
 package test;
 
 import Control.JSONReader;
+import Control.NodeManager;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import org.java_websocket.WebSocket;
@@ -24,10 +26,13 @@ class WebSeverSocket extends WebSocketServer{
     private Set<WebSocket> conns;
     
     private JSONReader reader;
+    
+    private NodeManager manager;
 
     public WebSeverSocket() {
         super(new InetSocketAddress(TCP_PORT));
         conns = new HashSet<>();
+        manager = new NodeManager();
     }
 
     @Override
@@ -45,7 +50,10 @@ class WebSeverSocket extends WebSocketServer{
     @Override
     public void onMessage(WebSocket conn, String message) {
         reader = new JSONReader();
-        reader.parseUserInput(message);
+        HashMap<String,String> map = reader.parseUserInput(message);
+        manager.setStart(Double.parseDouble(map.get("StartLat")),Double.parseDouble(map.get("StartLon")));
+        manager.setEnd(Double.parseDouble(map.get("EndLat")),Double.parseDouble(map.get("EndLon")));
+        manager.search();
         System.out.println("Message from client: " + message);
         for (WebSocket sock : conns) {
             sock.send(message);

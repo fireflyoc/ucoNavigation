@@ -18,7 +18,7 @@ public class Server {
      * @param args the command line arguments
      */
     public static void main(String[] args){
-        NodeManager manager = new NodeManager();
+        //NodeManager manager = new NodeManager();
         new WebSeverSocket().start();
         
     }

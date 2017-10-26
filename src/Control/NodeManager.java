@@ -48,6 +48,7 @@ public class NodeManager{
     Path toEntrance = null, toEnd=null;
     Building cmsc, hoh, nigh, music;
     JTextField text;
+    Boolean ada;
 
 
     public NodeManager() {
@@ -123,25 +124,87 @@ public class NodeManager{
         
     }
     
-    public void setStart(double lat, double lon){
-        
+    public void setStart(double lat, double lon, String buildingName){
+        start = new Node(lat,lon,"ent",0,true);
+        switch (buildingName){
+            case "HoH":
+                if(ada){
+                    for(Node e: hoh.adaEntrances){
+                        Path temp = new Path(start, e);
+                        if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
+                            toEntrance = temp;
+                        }
+                    }
+                }
+                else{
+                    for(Node e: hoh.entrances){
+                        Path temp = new Path(start, e);
+                        if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
+                            toEntrance = temp;
+                        }
+                    }
+                }
+                break;
+            case "cmsc":
+                if(ada){
+                    for(Node e: cmsc.adaEntrances){
+                        Path temp = new Path(start, e);
+                        if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
+                            toEntrance = temp;
+                        }
+                    }
+                }
+                else{
+                    for(Node e: cmsc.entrances){
+                        Path temp = new Path(start, e);
+                        if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
+                            toEntrance = temp;
+                        }
+                    }
+                }
+                break;
+        }
     }
     
-    public void setEnd(double lat, double lon){
-        if(finish.getX() <cmsc.getX()+cmsc.getW() && finish.getX() >cmsc.getX() && finish.getY() >cmsc.getY() && finish.getY()<cmsc.getY()+cmsc.getH()){
-            for(Node e : cmsc.entrances){
-                Path temp = new Path(finish, e);
-                if(toEnd == null || temp.getLength()<toEnd.getLength()){
-                    toEnd = temp;
+    public void setEnd(double lat, double lon, String buildingName){
+        finish = new Node(lat,lon,"ent",0,true);
+        switch (buildingName){
+            case "HoH":
+                if(ada){
+                    for(Node e: hoh.adaEntrances){
+                        Path temp = new Path(finish, e);
+                        if(toEnd == null || temp.getLength()<toEnd.getLength()){
+                            toEnd = temp;
+                        }
+                    }
                 }
-            }
-        } else if(finish.getX() <hoh.getX()+hoh.getW() && finish.getX() >hoh.getX() && finish.getY()>hoh.getY() && finish.getY()<hoh.getY()+hoh.getH()){
-            for(Node e : hoh.entrances){
-                Path temp = new Path(finish, e);
-                if(toEnd == null || temp.getLength()<toEnd.getLength()){
-                    toEnd = temp;
+                else{
+                    for(Node e: hoh.entrances){
+                        Path temp = new Path(finish, e);
+                        if(toEnd == null || temp.getLength()<toEnd.getLength()){
+                            toEnd = temp;
+                        }
+                    }
                 }
-            }
+                break;
+            case "cmsc":
+                if(ada){
+                    for(Node e: cmsc.adaEntrances){
+                        Path temp = new Path(finish, e);
+                        if(toEnd == null || temp.getLength()<toEnd.getLength()){
+                            toEnd = temp;
+                        }
+                    }
+                }
+                else{
+                    for(Node e: cmsc.entrances){
+                        Path temp = new Path(finish, e);
+                        if(toEnd == null || temp.getLength()<toEnd.getLength()){
+                            toEnd = temp;
+                        }
+                    }
+                }
+                break;
         }
     }
     
@@ -298,7 +361,9 @@ public class NodeManager{
 
     }
 
-    
+    public void setADA(Boolean a){
+        ada=a;
+    }
     
     
 }//end NodeManager

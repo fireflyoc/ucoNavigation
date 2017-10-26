@@ -51,8 +51,9 @@ class WebSeverSocket extends WebSocketServer{
     public void onMessage(WebSocket conn, String message) {
         reader = new JSONReader();
         HashMap<String,String> map = reader.parseUserInput(message);
-        manager.setStart(Double.parseDouble(map.get("StartLat")),Double.parseDouble(map.get("StartLon")));
-        manager.setEnd(Double.parseDouble(map.get("EndLat")),Double.parseDouble(map.get("EndLon")));
+        manager.setADA(Boolean.parseBoolean(map.get("ada")));
+        manager.setStart(Double.parseDouble(map.get("StartLat")),Double.parseDouble(map.get("StartLon")),map.get("StartNode"));
+        manager.setEnd(Double.parseDouble(map.get("EndLat")),Double.parseDouble(map.get("EndLon")),map.get("EndNode"));
         manager.search();
         System.out.println("Message from client: " + message);
         for (WebSocket sock : conns) {

@@ -243,7 +243,7 @@ public class NodeManager{
         try{        
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             //Must update nodeXMLPath to the absolute path once moved to CS Server
-            String nodeXMLPath = "C:\\Users\\Noah\\Documents\\NetBeansProjects\\ucoNavigation\\src\\Control\\node.xml";
+            String nodeXMLPath = "/home/gq/gq027/public_html/ucoNavigation/src/Control/node.xml";
             InputStream in = new FileInputStream(nodeXMLPath);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             Node node = null;

@@ -21,7 +21,7 @@ import org.java_websocket.server.WebSocketServer;
  */
 class WebSeverSocket extends WebSocketServer{
 
-    private static int TCP_PORT = 4444;
+    private static int TCP_PORT = 44444;
 
     private Set<WebSocket> conns;
     
@@ -32,7 +32,7 @@ class WebSeverSocket extends WebSocketServer{
     public WebSeverSocket() {
         super(new InetSocketAddress(TCP_PORT));
         conns = new HashSet<>();
-        manager = new NodeManager();
+        //manager = new NodeManager();
     }
 
     @Override
@@ -51,11 +51,11 @@ class WebSeverSocket extends WebSocketServer{
     public void onMessage(WebSocket conn, String message) {
         reader = new JSONReader();
         HashMap<String,String> map = reader.parseUserInput(message);
-        manager.setADA(Boolean.parseBoolean(map.get("ada")));
+        /*manager.setADA(Boolean.parseBoolean(map.get("ada")));
         manager.setStart(Double.parseDouble(map.get("StartLat")),Double.parseDouble(map.get("StartLon")),map.get("StartNode"));
         manager.setEnd(Double.parseDouble(map.get("EndLat")),Double.parseDouble(map.get("EndLon")),map.get("EndNode"));
         manager.search();
-        System.out.println("Message from client: " + message);
+        */System.out.println("Message from client: " + message);
         for (WebSocket sock : conns) {
             sock.send(message);
         }

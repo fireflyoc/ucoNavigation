@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple Map</title>
+        <meta name="viewport" content="initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            /* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+            #map {
+                height: 100%;
+            }
+            /* Optional: Makes the sample page fill the window. */
+            html, body, #map_canvas {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <datalist id="buildings">
+            <option value="HTML" label="0">
+            <option value="CSS" label="1">
+            <option value="JavaScript" label="2">
+            <option value="Java" label="3">
+            <option value="Ruby" label="4"> 
+            <option value="PHP" label="5">
+            <option value="Go" label="6">
+            <option value="Erlang" label="7">
+            <option value="Python" label="8">
+            <option value="C" label="9">
+            <option value="C#" label="10">
+            <option value="C++" label="11">
+        </datalist>
+        <table style ="width: 100%">
+            <tr>
+                <th>
+                    <p><b>Start Building</b><br />
+                        <input type="text" list="buildings" id="startBuilding"/>
+
+                </th>
+                <th>
+                    <p><b>End Building</b><br />
+                        <input type="text" list="buildings" id="endBuilding"/> </p>
+                </th>
+
+                <th>
+                    <input type="checkbox" name="adaComplient" onchange='handleCheckBox(this);'  />ADA Complaint<br />
+                </th>
+
+                <th>
+                    <button type="button" name="startButton" onclick='handleButton(this);'  />Start<br />
+                </th>
+            </tr>
+            <tr>
+
+            </tr>
+        </table>
+
+        <div id="map_canvas"></div>
+        <script>
+            var map;
+            var geocoder = new google.maps.Geocoder();
+            var adaComplientBoolean = false;
+            var startBuilding;
+            var endBuilding;
+            var totalBuildings;
+            var ada = "false";
+            var webSocket;
+            var url;
+
+
+
+            function initMap() {
+
+                connectToServer();
+                window.alert("testing alert window");
+                //concole.log("===================== its a thing that happend");
+                //concole.log("=========testing console");
+                var cmsc = {lat: 35.65402605216841, lng: -97.47280623579024};
+                var centerLatLng = {lat: 35.6549, lng: -97.4715};
+                var locations = [cmsc, centerLatLng];
+                
+
+                map = new google.maps.Map(document.getElementById('map_canvas'), {
+                    center: locations[0],
+                    zoom: 18
+                });
+
+                var startMarker = new google.maps.Marker({
+                    position: cmsc,
+                    map: map,
+                    draggable: true,
+                    title: 'placeHolder'
+                });
+
+                var endMarker = new google.maps.Marker({
+                    position: centerLatLng,
+                    map: map,
+                    draggable: true,
+                    title: 'placeHolder1'
+                });
+
+                // var adaComplient = document.querySelector('adaComplient');
+                var locations = [
+                    ['Nigh Center', 35.6549, -97.4715, 1],
+                    ['cmsc', 35.65402605216841, -97.47280623579024, 2]
+                ];
+                addListener(locations);
+                
+
+
+            }
+            function addListener(locations, map) {
+                var infoWindow = new google.maps.InfoWindow;
+
+                for (i = 0; i < locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: locations[i],
+                        map: map
+                    });
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infoWindow.setContent(locations[i][0]);
+                            infoWindow.open(map, marker);
+                        };
+                    })(marker, i));
+                }
+//                google.maps.event.addListener(marker[i], "click", function (event) {
+//                    var latitude = event.latLng.lat();
+//                    console.log('-----------------gets to addListener' + latitude);
+//                    var longitude = event.latLng.lng();
+//                    console.log('-----------------gets to addListener' + longitude);
+//                    console.log(latitude + ', ' + longitude);
+//                    // Center of map
+//                    map.panTo(new google.maps.LatLng(latitude, longitude));
+//                }); //end addListener
+//                document.getElementById("startButton").addEventListener("click", function (event) {
+//                    start = document.getElementById(startBuilding).toString();
+//                    end = documnet.getElementById(endBuilding).toString();
+//                    console.log('start = ' + start + ' end = ' + end);
+//                });
+//                google.maps.event.addListener(endMarker, "click", function (event) {
+//                    var latitude = event.latLng.lat();
+//                    console.log(latitude);
+//                    var longitude = event.latLng.lng();
+//                    console.log(longitude);
+//                    console.log(latitude + ', ' + longitude);
+//
+//                    // Center of map
+//                    map.panTo(new google.maps.LatLng(latitude, longitude));
+//                }); //end addListener
+            }
+
+            function handleCheckBox(checkbox) {
+                if (checkbox.checked) {
+                    adaComplientBoolean = true;
+                } else if (!checkbox.checked) {
+                    adaComplientBoolean = false;
+                } else {
+                    adaComplientBoolean = false;
+                }
+            }
+
+            function handleButton(button) {
+                startBuilding = document.getElementById("startBuilding").value;
+                endBuilding = document.getElementById("endBuilding").value;
+                totalBuildings = document.getElementById("buildings").options.length;
+                var json = makeBeginToEndPathJSON();
+                sendJSON(json);
+
+            }
+
+            function goodBuildingInput() {
+                window.alert("access sanatizer");
+                var currentBuilding = "";
+                var trueStartBuildingName = false;
+                var trueEndBuildingName = false;
+                //compares the input names to the list of drop down names 
+                //breaks early if it finds two true answers
+
+                for (var i = 0; i < totalBuildings; i++) {
+                    currentBuilding = document.getElementById("buildings").options[i].value;
+                    if (currentBuilding === startBuilding) {
+                        trueStartBuildingName = true;
+                    }
+                    if (currentBuilding === endBuilding) {
+                        trueEndBuildingName = true;
+                    }
+                    if (trueStartBuildingName && trueEndBuildingName) {
+                        break;
+                    }
+                }
+                //these if's send output if it has bad names
+                if (!trueStartBuildingName) {
+                    document.getElementById()("startBuilding").value = "incorrect input";
+                }
+                if (!trueEndBuildingName) {
+                    document.getElementById("endBuilding").value = "incorrect input";
+                }
+                if (trueStartBuildingName && trueEndBuildingName) {
+                    window.alert("good input");
+                    return true;
+                } else {
+                    window.alert("bad input");
+                    return false;
+                }
+                return false;
+            }
+
+            function sendJSON(json) {
+                var jsonString = JSON.stringify(json);
+                //this is the websocket method
+                webSocket.send(jsonString);
+
+            }
+
+            function connectToServer() {
+                window.alert("accessed connect to server funtion")
+                url= 'ws://127.0.0.1:44444';
+                webSocket = new WebSocket(url);
+                window.alert("connected to server")
+            }
+
+            function recieveJSON() {
+                var URL = url;
+                webSocket.onmessage = function(event){
+                    var message = event.data;
+                    
+                };
+
+                return;
+            }
+
+            function makeBeginToEndPathJSON() {
+                if (goodBuildingInput()) {
+
+                    var jsonBuildingArray = [];
+                    var route = {
+                        "name": startBuilding,
+                        "lat": "dummy",
+                        "lon": "dummy"};
+                    //it breaks on the first push
+                    jsonBuildingArray.push(route);
+                    route = {
+                        "name": endBuilding,
+                        "lat": "dummy",
+                        "lon": "dummy"};
+                    jsonBuildingArray.push(route);
+                    //test json array
+
+                    if (adaComplientBoolean !== true && !adaComplientBoolean !== false) {
+                        adaComplientBoolean = false;
+                    }
+                    var entireJSON = {
+                        "route": jsonBuildingArray,
+                        "ada": adaComplientBoolean
+
+                    };
+                    window.alert(JSON.stringify(entireJSON));
+                    return entireJSON;
+                } else {
+                    return null;
+                }
+
+            }
+
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC69xNPoDqxUYfYSD9ASL5tztDV5PKG5SE&callback=initMap"
+        async defer></script>
+    </body>
+</html>

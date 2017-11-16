@@ -6,10 +6,13 @@
 package test;
 
 import Control.JSONReader;
+import Control.JSONWriter;
 import Control.NodeManager;
+import Model.Node;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -26,12 +29,16 @@ class WebSeverSocket extends WebSocketServer{
     private Set<WebSocket> conns;
     
     private JSONReader reader;
-    
+    private JSONWriter writer;
     private NodeManager manager;
+    LinkedList<Node> route;
+    String routeString = "";
 
     public WebSeverSocket() {
         super(new InetSocketAddress(TCP_PORT));
         conns = new HashSet<>();
+        route = new LinkedList<>();
+        writer = new JSONWriter();
         //manager = new NodeManager();
     }
 
@@ -51,13 +58,14 @@ class WebSeverSocket extends WebSocketServer{
     public void onMessage(WebSocket conn, String message) {
         reader = new JSONReader();
         HashMap<String,String> map = reader.parseUserInput(message);
-        /*manager.setADA(Boolean.parseBoolean(map.get("ada")));
+        manager.setADA(Boolean.parseBoolean(map.get("ada")));
         manager.setStart(Double.parseDouble(map.get("StartLat")),Double.parseDouble(map.get("StartLon")),map.get("StartNode"));
         manager.setEnd(Double.parseDouble(map.get("EndLat")),Double.parseDouble(map.get("EndLon")),map.get("EndNode"));
-        manager.search();
-        */System.out.println("Message from client: " + message);
+        route = manager.search();
+        routeString = writer.convertListToJsonArray(route);
+        System.out.println("Message from client: " + message);
         for (WebSocket sock : conns) {
-            sock.send(message);
+            sock.send(routeString);
         }
     }
 

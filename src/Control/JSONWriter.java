@@ -10,10 +10,10 @@ import java.util.LinkedList;
 public class JSONWriter {
 
    public String convertListToJsonArray(LinkedList<Node> list){
-     String output = "{\"userPath\":[";
+     String output = "{\"path\":[";
        
        for(Node n: list){
-           output+="{\"id\":\""+n.getID()+"\",";
+           output+="{\"name\":\""+n.getID()+"\",";
            output+="\"lat\":\""+n.getLat()+"\",";
            output+="\"lon\":\""+n.getLon()+"\"},";
        } //end for loop

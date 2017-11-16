@@ -13,15 +13,15 @@ import java.util.ArrayList;
  */
 public class Building {
     
-    int width, height,x,y; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
+    Double x1, y1, x2, y2; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
     public ArrayList<Node> entrances;
     public ArrayList<Node> adaEntrances;
     
-    public Building(int w, int h, int x, int y){
-        width=w;
-        height=h;
-        this.x=x;
-        this.y=y;
+    public Building(Double x1, Double y1, Double x2, Double y2){
+        this.x1 = x1;
+        this.x2=x2;
+        this.y1=y1;
+        this.y2=y2;
         entrances = new ArrayList<>();
         adaEntrances=new ArrayList<>();
     }
@@ -37,20 +37,20 @@ public class Building {
         return entrances.get(i);
     }
     
-    public int getW(){
-        return width;
+    public Double getX1(){
+        return x1;
     }
     
-    public int getH(){
-        return height;
+    public Double getY1(){
+        return y1;
     }
     
-    public int getX(){
-        return x;
+    public Double getX2(){
+        return x2;
     }
     
-    public int getY(){
-        return y;
+    public Double getY2(){
+        return y2;
     }
     
 }

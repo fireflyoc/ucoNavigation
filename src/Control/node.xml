@@ -45,7 +45,7 @@
         <lat>35.655000</lat> 
         <lon>-97.473092</lon>
         <type>1</type>
-        <ada>false</ada>
+        <ada>true</ada>
         <active>true</active>
     </Node>
     <Node>
@@ -137,9 +137,17 @@
         <active>true</active>
     </Node>
     <Node>
-        <name>Nigh North West near Food Court</name>
-        <lat>35.655271</lat> 
-        <lon>-97.471898</lon>
+        <name>Nigh West Center Stairs</name>
+        <lat>35.655120</lat> 
+        <lon>-97.471708</lon>
+        <type>1</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>Nigh North West</name>
+        <lat>35.655660</lat> 
+        <lon>-97.471871</lon>
         <type>1</type>
         <ada>true</ada>
         <active>true</active>
@@ -294,7 +302,7 @@
         <lat>35.654682</lat> 
         <lon>-97.471735</lon>
         <type>0</type>
-        <ada>true</ada>
+        <ada>false</ada>
         <active>true</active>
     </Node>
     <Node> 

@@ -13,15 +13,15 @@ import java.util.ArrayList;
  */
 public class Building {
     
-    Double x1, y1, x2, y2; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
+    Double lon1, lat1, lon2, lat2; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
     public ArrayList<Node> entrances;
     public ArrayList<Node> adaEntrances;
     
-    public Building(Double x1, Double y1, Double x2, Double y2){
-        this.x1 = x1;
-        this.x2=x2;
-        this.y1=y1;
-        this.y2=y2;
+    public Building(Double lat1, Double lon, Double lon2, Double lat2){
+        this.lon1 = lon1;
+        this.lon2=lon2;
+        this.lat1=lat1;
+        this.lat2=lat2;
         entrances = new ArrayList<>();
         adaEntrances=new ArrayList<>();
     }
@@ -37,20 +37,20 @@ public class Building {
         return entrances.get(i);
     }
     
-    public Double getX1(){
-        return x1;
+    public Double getLon1(){
+        return lon1;
     }
     
-    public Double getY1(){
-        return y1;
+    public Double getLat1(){
+        return lat1;
     }
     
-    public Double getX2(){
-        return x2;
+    public Double getLon2(){
+        return lon2;
     }
     
-    public Double getY2(){
-        return y2;
+    public Double getLat2(){
+        return lat2;
     }
     
 }

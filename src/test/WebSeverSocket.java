@@ -39,7 +39,7 @@ class WebSeverSocket extends WebSocketServer{
         conns = new HashSet<>();
         route = new LinkedList<>();
         writer = new JSONWriter();
-        //manager = new NodeManager();
+        manager = new NodeManager();
     }
 
     @Override

@@ -58,27 +58,28 @@ public class NodeManager{
         text.setPreferredSize(new Dimension(500,25));
         text.setEditable(false);
         //Setup buildings
-        cmsc = new Building(35.653762, -97.473034,35.654233,-97.472557);
-        hoh = new Building(35.654517,-97.473029,35.655175, -97.472015);
+        cmsc = new Building(35.653762, -97.473034, 35.654233, -97.472557);
+        hoh = new Building(35.654517, -97.473029, 35.655175, -97.472015);
         nigh = new Building(35.654508,-97.471900, 35.655881, -97.471164);
-        chs = new Building(35.653253, -97.473780,35.653637, -97.473286);
+        chs = new Building(35.653253, -97.473780, 35.653637, -97.473286);
         
         readXML();
         //Setup Entrances
         for(Node n: allNodes){
             if(n.getType() == 0){ //Node is an entrance
-                if(n.getLat()>cmsc.getX1() && n.getLat()<cmsc.getX2() && Math.abs(n.getLon())>Math.abs(cmsc.getY1()) && Math.abs(n.getLon()) < Math.abs(cmsc.getY2())){
+                if(n.getLat()<cmsc.getLat1() && n.getLat()>cmsc.getLat2() && Math.abs(n.getLon())>Math.abs(cmsc.getLon1()) && Math.abs(n.getLon()) < Math.abs(cmsc.getLon2())){
                     cmsc.addEntrance(n);
                 }
-                if(n.getLat()>hoh.getX1() && n.getLat()<hoh.getX2() && Math.abs(n.getLon())>Math.abs(hoh.getY1()) && Math.abs(n.getLon()) < Math.abs(hoh.getY2())){
+                /*if(n.getLat()<hoh.getLat1() && n.getLat()>hoh.getLat2() && Math.abs(n.getLon())>Math.abs(hoh.getLon1()) && Math.abs(n.getLon()) < Math.abs(hoh.getLon2())){
                     hoh.addEntrance(n);
+                    System.out.println("Added entrance to HOH: "+n.getID());
                 }
-                if(n.getLat()>chs.getX1() && n.getLat()<chs.getX2() && Math.abs(n.getLon())>Math.abs(chs.getY1()) && Math.abs(n.getLon()) < Math.abs(chs.getY2())){
+                if(n.getLat()<chs.getLat1() && n.getLat()>chs.getLat2() && Math.abs(n.getLon())>Math.abs(chs.getLon1()) && Math.abs(n.getLon()) < Math.abs(chs.getLon2())){
                     chs.addEntrance(n);
                 }
-                if(n.getLat()>nigh.getX1() && n.getLat()<nigh.getX2() && Math.abs(n.getLon())>Math.abs(nigh.getY1()) && Math.abs(n.getLon()) < Math.abs(nigh.getY2())){
+                if(n.getLat()<nigh.getLat1() && n.getLat()>nigh.getLat2() && Math.abs(n.getLon())>Math.abs(nigh.getLon1()) && Math.abs(n.getLon()) < Math.abs(nigh.getLon2())){
                     nigh.addEntrance(n);
-                }
+                }*/
             }
         }
         //Setup Paths
@@ -133,7 +134,7 @@ public class NodeManager{
         paths.add(new Path(allNodes.get(21),allNodes.get(20)));
         paths.add(new Path(allNodes.get(22),allNodes.get(20)));
         paths.add(new Path(allNodes.get(23),allNodes.get(22)));
-        //Adding Entrances
+        //Adding Paths to Entrances
         paths.add(new Path(cmsc.getEntranceAt(0),allNodes.get(0)));
         paths.add(new Path(allNodes.get(0),cmsc.getEntranceAt(0)));
         paths.add(new Path(cmsc.getEntranceAt(1),allNodes.get(1)));
@@ -291,7 +292,8 @@ public class NodeManager{
         try{        
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             //Must update nodeXMLPath to the absolute path once moved to CS Server
-            String nodeXMLPath = "/home/gq/gq027/public_html/ucoNavigation/src/Control/node.xml";
+            String nodeXMLPath = "C:\\Users\\Noah\\Documents\\NetBeansProjects\\ucoNavigation\\src\\Control\\node.xml";
+            //String nodeXMLPath = "/home/gq/gq027/public_html/ucoNavigation/src/Control/node.xml";
             InputStream in = new FileInputStream(nodeXMLPath);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             Node node = null;
@@ -315,13 +317,13 @@ public class NodeManager{
                     if (event.isStartElement()) {
                         if (event.asStartElement().getName().getLocalPart().equals("lat")) {
                             event = eventReader.nextEvent();
-                            node.setLat(Integer.parseInt(event.asCharacters().getData()));
+                            node.setLat(Double.parseDouble(event.asCharacters().getData()));
                             continue;
                         }
                     }
                     if (event.asStartElement().getName().getLocalPart().equals("lon")) {
                         event = eventReader.nextEvent();
-                        node.setLon(Integer.parseInt(event.asCharacters().getData()));
+                        node.setLon(Double.parseDouble(event.asCharacters().getData()));
                         continue;
                     }
                     
@@ -348,7 +350,7 @@ public class NodeManager{
                 // If we reach the end of an item element, we add it to the list
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
-                    if (endElement.getName().getLocalPart().equals("node")) {
+                    if (endElement.getName().getLocalPart().equalsIgnoreCase("node")) {
                         allNodes.add(node);
                     }
                 }

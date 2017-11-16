@@ -1,10 +1,365 @@
 <?xml version="1.0"?>
 <Nodes>
-    <Node name="">
-        <lat>123</lat> 
-        <lon>465</lon>
+    <Node>
+        <name>North of CMSC North Entrance</name>
+        <lat>35.654373</lat> 
+        <lon>-97.472883</lon>
         <type>1</type>
         <ada>true</ada>
         <active>true</active>
     </Node>
+    <Node>
+        <name>West of CMSC West Entrance</name>
+        <lat>35.654037</lat> 
+        <lon>-97.473189</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>North West Corner of CMSC</name>
+        <lat>35.654386</lat> 
+        <lon>-97.473109</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>West of HOH SW after Stairs</name>
+        <lat>35.654693</lat> 
+        <lon>-97.473098</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>West of HOH SW before Stairs</name>
+        <lat>35.654710</lat> 
+        <lon>-97.472966</lon>
+        <type>1</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>West of HOH NW</name>
+        <lat>35.655000</lat> 
+        <lon>-97.473092</lon>
+        <type>1</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>NW Corner of HOH</name>
+        <lat>35.655179</lat> 
+        <lon>-97.473095</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>North Center of HOH</name>
+        <lat>35.655184</lat> 
+        <lon>-97.472513</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>North of HOH Before Angled Path</name>
+        <lat>35.655189</lat> 
+        <lon>-97.472390</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>Angled Path at HOH North East</name>
+        <lat>35.655139</lat> 
+        <lon>-97.472151</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>Between HOH NE and Nigh West Center</name>
+        <lat>35.655108</lat> 
+        <lon>-97.471978</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>Between HOH SE and Night South West</name>
+        <lat>35.654691</lat> 
+        <lon>-97.471968</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>HOH South East</name>
+        <lat>35.654682</lat> 
+        <lon>-97.472208</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>South of HOH SE Path</name>
+        <lat>35.654443</lat> 
+        <lon>-97.471947</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>Road Intersection at SE HOH and Nigh SW</name>
+        <lat>35.654412</lat> 
+        <lon>-97.472153</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>Nigh West Center near ADA Ramp</name>
+        <lat>35.655271</lat> 
+        <lon>-97.471898</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>Nigh North West at top of Stairs</name>
+        <lat>35.655446</lat> 
+        <lon>-97.471887</lon>
+        <type>1</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>Nigh North West near Food Court</name>
+        <lat>35.655271</lat> 
+        <lon>-97.471898</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>South West CMSC</name>
+        <lat>35.653818</lat> 
+        <lon>-97.473127</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>CHS North East</name>
+        <lat>35.653673</lat> 
+        <lon>-97.473213</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>CHS East Center</name>
+        <lat>35.653465</lat> 
+        <lon>-97.473226</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>CHS North West</name>
+        <lat>35.653686</lat> 
+        <lon>-97.473893</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>CHS West Center</name>
+        <lat>35.653471</lat> 
+        <lon>-97.473885</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>MSC North</name>
+        <lat>35.654249</lat> 
+        <lon>-97.472882</lon>
+        <type>0</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+
+    <Node> 
+        <name>MSC West</name>
+        <lat>35.653989</lat> 
+        <lon>-97.473062</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>MSC East</name>
+        <lat>35.653897</lat> 
+        <lon>-97.472529</lon>
+        <type>0</type>
+        <ada>false</ada>
+        <active>false</active>
+    </Node>
+    <Node> 
+        <name>CHS West</name>
+        <lat>35.653476</lat> 
+        <lon>-97.473827</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>CHS East</name>
+        <lat>35.653448</lat> 
+        <lon>-97.473268</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>HOH LabWest</name>
+        <lat>35.654649</lat> 
+        <lon>-97.472897</lon>
+        <type>0</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>HoH LabEast</name>
+        <lat>35.654634</lat> 
+        <lon>-97.472259</lon>
+        <type>0</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>HoH AtriumWest</name>
+        <lat>35.654803</lat> 
+        <lon>-97.472753</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>HoH Atrium East</name>
+        <lat>35.654801</lat> 
+        <lon>-97.472329</lon>
+        <type>0</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>HoH Main South East</name>
+        <lat>35.654832</lat> 
+        <lon>-97.472182</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>HoH Main North East</name>
+        <lat>35.654992</lat> 
+        <lon>-97.472129</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>HoH Main</name>
+        <lat>35.655000</lat> 
+        <lon>-97.472964</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 1f South</name>
+        <lat>35.654432</lat> 
+        <lon>-97.471439</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 1f South West</name>
+        <lat>35.654682</lat> 
+        <lon>-97.471735</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 1f South East</name>
+        <lat>35.654685</lat> 
+        <lon>-97.471126</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 1f West Center</name>
+        <lat>35.655102</lat> 
+        <lon>-97.471712</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 1f East Center</name>
+        <lat>35.655099</lat> 
+        <lon>-97.471229</lon>
+        <type>0</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 2f South East</name>
+        <lat>35.655177</lat> 
+        <lon>-97.471185</lon>
+        <type>0</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 2f Main East</name>
+        <lat>35.655343</lat> 
+        <lon>-97.471167</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 2f North East</name>
+        <lat>35.655727</lat> 
+        <lon>-97.471265</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 2f North West</name>
+        <lat>35.655727</lat> 
+        <lon>-97.471645</lon>
+        <type>0</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node> 
+        <name>Nigh 2f Food Court</name>
+        <lat>35.655654</lat> 
+        <lon>-97.471695</lon>
+        <type>0</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+
 </Nodes>

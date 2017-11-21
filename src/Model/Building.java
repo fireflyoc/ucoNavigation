@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
@@ -12,45 +14,43 @@ import java.util.ArrayList;
  * @author Noah G
  */
 public class Building {
-    
-    Double lon1, lat1, lon2, lat2; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
+
+    //  Double eastBoundry, westBoundry, lon2, lat2; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
+    private Point2D.Double SWCorner, NECorner;
+    private String name;
     public ArrayList<Node> entrances;
     public ArrayList<Node> adaEntrances;
-    
-    public Building(Double lat1, Double lon, Double lon2, Double lat2){
-        this.lon1 = lon1;
-        this.lon2=lon2;
-        this.lat1=lat1;
-        this.lat2=lat2;
+
+    public Building(String name, Point2D.Double SWCorner, Point2D.Double NECorner) {
+        this.SWCorner = SWCorner;
+        this.NECorner = NECorner;
+        this.name = name;
         entrances = new ArrayList<>();
-        adaEntrances=new ArrayList<>();
+        adaEntrances = new ArrayList<>();
     }
-    
-    public void addEntrance(Node e){
+
+    public void addEntrance(Node e) {
+        System.out.println(getName()+" adding Entrace: " + e.getID());
         entrances.add(e);
-        if(e.getADA()){
+        if (e.getADA()) {
             adaEntrances.add(e);
         }
     }
-    
-    public Node getEntranceAt(int i){
+
+    public Node getEntranceAt(int i) {
+        System.out.println("B: "+getName()+" s: " + entrances.size());
         return entrances.get(i);
     }
-    
-    public Double getLon1(){
-        return lon1;
+
+    public String getName() {
+        return this.name;
     }
-    
-    public Double getLat1(){
-        return lat1;
+
+    public Point2D.Double getSWCorner() {
+        return this.SWCorner;
     }
-    
-    public Double getLon2(){
-        return lon2;
+
+    public Point2D.Double getNECorner() {
+        return this.NECorner;
     }
-    
-    public Double getLat2(){
-        return lat2;
-    }
-    
-}
+}//end class

@@ -194,8 +194,8 @@
     </Node>
     <Node> 
         <name>MSC North</name>
-        <lat>35.654249</lat> 
-        <lon>-97.472882</lon>
+        <lat>35.654203</lat> 
+        <lon>-97.472904</lon>
         <type>0</type>
         <ada>false</ada>
         <active>true</active>

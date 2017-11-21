@@ -5,15 +5,15 @@ package Control;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import Model.Stairs;
 import Model.Building;
 import Model.Node;
 import Model.Path;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Point2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,309 +39,205 @@ import javax.xml.stream.events.XMLEvent;
  *
  * @author Noah G
  */
-public class NodeManager{
+public class NodeManager {
+
     ArrayList<Path> paths;
     ArrayList<Node> allNodes;
+    ArrayList<Building> buildings;
+
     Node start, finish;
-    int x,y=0;
+    int x, y = 0;
     ArrayList<Path> finalPath;
-    Path toEntrance = null, toEnd=null;
-    Building cmsc, hoh, nigh, chs;
+    Path toEntrance = null, toEnd = null;
+    
     JTextField text;
     Boolean ada;
-
 
     public NodeManager() {
         paths = new ArrayList<>();
         allNodes = new ArrayList<>();
+        buildings = new ArrayList<>();
         text = new JTextField();
-        text.setPreferredSize(new Dimension(500,25));
+        text.setPreferredSize(new Dimension(500, 25));
         text.setEditable(false);
         //Setup buildings
-        cmsc = new Building(35.653762, -97.473034, 35.654233, -97.472557);
-        hoh = new Building(35.654517, -97.473029, 35.655175, -97.472015);
-        nigh = new Building(35.654508,-97.471900, 35.655881, -97.471164);
-        chs = new Building(35.653253, -97.473780, 35.653637, -97.473286);
-        
+        //building(SW - NE)
+
+        buildings.add(new Building("cmsc", new Point2D.Double(-97.473048, 35.653745), new Point2D.Double(-97.472527, 35.654258)));
+        buildings.add(new Building("hoh", new Point2D.Double(-97.472978, 35.654491), new Point2D.Double(-97.472075, 35.655192)));
+        buildings.add(new Building("nigh", new Point2D.Double(-97.471831, 35.654403), new Point2D.Double(-97.470953, 35.655913)));
+        buildings.add(new Building("chs", new Point2D.Double(-97.473915, 35.653193), new Point2D.Double(-97.473219, 35.653703)));
+
         readXML();
         //Setup Entrances
-        for(Node n: allNodes){
-            if(n.getType() == 0){ //Node is an entrance
-                if(n.getLat()<cmsc.getLat1() && n.getLat()>cmsc.getLat2() && Math.abs(n.getLon())>Math.abs(cmsc.getLon1()) && Math.abs(n.getLon()) < Math.abs(cmsc.getLon2())){
-                    cmsc.addEntrance(n);
-                }
-                /*if(n.getLat()<hoh.getLat1() && n.getLat()>hoh.getLat2() && Math.abs(n.getLon())>Math.abs(hoh.getLon1()) && Math.abs(n.getLon()) < Math.abs(hoh.getLon2())){
-                    hoh.addEntrance(n);
-                    System.out.println("Added entrance to HOH: "+n.getID());
-                }
-                if(n.getLat()<chs.getLat1() && n.getLat()>chs.getLat2() && Math.abs(n.getLon())>Math.abs(chs.getLon1()) && Math.abs(n.getLon()) < Math.abs(chs.getLon2())){
-                    chs.addEntrance(n);
-                }
-                if(n.getLat()<nigh.getLat1() && n.getLat()>nigh.getLat2() && Math.abs(n.getLon())>Math.abs(nigh.getLon1()) && Math.abs(n.getLon()) < Math.abs(nigh.getLon2())){
-                    nigh.addEntrance(n);
-                }*/
-            }
-        }
-        //Setup Paths
-        paths.add(new Path(allNodes.get(0),allNodes.get(2))); //Path from CMSC North Entrance up
-        paths.add(new Path(allNodes.get(1),allNodes.get(2))); //E/W Path above CMSC
-        paths.add(new Path(allNodes.get(2),allNodes.get(3))); //Path from CMSC East Entrance up
-        paths.add(new Path(allNodes.get(3),allNodes.get(4))); //Path heading North along West side of HOH
-        paths.add(new Path(allNodes.get(3),allNodes.get(5))); //Path heading North along West side of HOH
-        paths.add(new Path(allNodes.get(5),allNodes.get(6))); //Path heading East along North side of HOH
-        paths.add(new Path(allNodes.get(6),allNodes.get(7))); //Short path heading East along North Side of HOH
-        paths.add(new Path(allNodes.get(7),allNodes.get(8))); //Path from North side of HOH to NC entrance
-        paths.add(new Path(allNodes.get(8),allNodes.get(9))); //Diaganol path on NE side of HOH
-        paths.add(new Path(allNodes.get(9),allNodes.get(10))); //Path South between Nigh and HOH
-        paths.add(new Path(allNodes.get(10),allNodes.get(11))); //Path South between Nigh and HOH
-        paths.add(new Path(allNodes.get(11),allNodes.get(12))); //Path East towards East HOH Entrances
-        paths.add(new Path(allNodes.get(12),allNodes.get(13))); //Path South from East HOH Entrances
-        paths.add(new Path(allNodes.get(11),allNodes.get(14))); //Path East between HOH and CMSC
-        paths.add(new Path(allNodes.get(13),allNodes.get(14)));
-        paths.add(new Path(allNodes.get(13),allNodes.get(0)));
-        paths.add(new Path(allNodes.get(10),allNodes.get(15))); //Path North along West side of HOH to NW corner
-        paths.add(new Path(allNodes.get(10),allNodes.get(16)));
-        paths.add(new Path(allNodes.get(16),allNodes.get(18)));
-        paths.add(new Path(allNodes.get(10),allNodes.get(17)));
-        paths.add(new Path(allNodes.get(1),allNodes.get(19)));
-        paths.add(new Path(allNodes.get(19),allNodes.get(20)));
-        paths.add(new Path(allNodes.get(20),allNodes.get(21)));
-        paths.add(new Path(allNodes.get(20),allNodes.get(22)));
-        paths.add(new Path(allNodes.get(22),allNodes.get(23)));
-        //Adding Symmetrical Paths
-        paths.add(new Path(allNodes.get(2),allNodes.get(0))); //Path from CMSC North Entrance up
-        paths.add(new Path(allNodes.get(2),allNodes.get(1))); //E/W Path above CMSC
-        paths.add(new Path(allNodes.get(3),allNodes.get(2))); //Path from CMSC East Entrance up
-        paths.add(new Path(allNodes.get(4),allNodes.get(3))); //Path heading North along West side of HOH
-        paths.add(new Path(allNodes.get(5),allNodes.get(3))); //Path heading North along West side of HOH
-        paths.add(new Path(allNodes.get(6),allNodes.get(5))); //Path heading East along North side of HOH
-        paths.add(new Path(allNodes.get(7),allNodes.get(6))); //Short path heading East along North Side of HOH
-        paths.add(new Path(allNodes.get(8),allNodes.get(7))); //Path from North side of HOH to NC entrance
-        paths.add(new Path(allNodes.get(9),allNodes.get(8))); //Diaganol path on NE side of HOH
-        paths.add(new Path(allNodes.get(10),allNodes.get(9))); //Path South between Nigh and HOH
-        paths.add(new Path(allNodes.get(11),allNodes.get(10))); //Path South between Nigh and HOH
-        paths.add(new Path(allNodes.get(12),allNodes.get(11))); //Path East towards East HOH Entrances
-        paths.add(new Path(allNodes.get(13),allNodes.get(12))); //Path South from East HOH Entrances
-        paths.add(new Path(allNodes.get(14),allNodes.get(11))); //Path East between HOH and CMSC
-        paths.add(new Path(allNodes.get(14),allNodes.get(13)));
-        paths.add(new Path(allNodes.get(0),allNodes.get(13)));
-        paths.add(new Path(allNodes.get(15),allNodes.get(10))); //Path North along West side of HOH to NW corner
-        paths.add(new Path(allNodes.get(16),allNodes.get(10)));
-        paths.add(new Path(allNodes.get(18),allNodes.get(16)));
-        paths.add(new Path(allNodes.get(17),allNodes.get(10)));
-        paths.add(new Path(allNodes.get(19),allNodes.get(1)));
-        paths.add(new Path(allNodes.get(20),allNodes.get(19)));
-        paths.add(new Path(allNodes.get(21),allNodes.get(20)));
-        paths.add(new Path(allNodes.get(22),allNodes.get(20)));
-        paths.add(new Path(allNodes.get(23),allNodes.get(22)));
-        //Adding Paths to Entrances
-        paths.add(new Path(cmsc.getEntranceAt(0),allNodes.get(0)));
-        paths.add(new Path(allNodes.get(0),cmsc.getEntranceAt(0)));
-        paths.add(new Path(cmsc.getEntranceAt(1),allNodes.get(1)));
-        paths.add(new Path(allNodes.get(1),cmsc.getEntranceAt(1)));
-        paths.add(new Path(allNodes.get(21),chs.getEntranceAt(1)));
-        paths.add(new Path(allNodes.get(23),chs.getEntranceAt(0)));
-        paths.add(new Path(chs.getEntranceAt(0),allNodes.get(23)));
-        paths.add(new Path(chs.getEntranceAt(1),allNodes.get(21)));
-        paths.add(new Path(hoh.getEntranceAt(0),allNodes.get(4)));
-        paths.add(new Path(allNodes.get(4),hoh.getEntranceAt(0)));
-        paths.add(new Path(hoh.getEntranceAt(1),allNodes.get(12)));
-        paths.add(new Path(allNodes.get(12),hoh.getEntranceAt(1)));
-        paths.add(new Path(hoh.getEntranceAt(2),allNodes.get(4)));
-        paths.add(new Path(allNodes.get(4),hoh.getEntranceAt(2)));
-        paths.add(new Path(hoh.getEntranceAt(3),allNodes.get(12)));
-        paths.add(new Path(allNodes.get(12),hoh.getEntranceAt(3)));
-        paths.add(new Path(hoh.getEntranceAt(4),allNodes.get(12)));
-        paths.add(new Path(allNodes.get(12),hoh.getEntranceAt(4)));
-        paths.add(new Path(hoh.getEntranceAt(5),allNodes.get(10)));
-        paths.add(new Path(allNodes.get(10),hoh.getEntranceAt(5)));
-        paths.add(new Path(allNodes.get(5),hoh.getEntranceAt(6)));
-        paths.add(new Path(hoh.getEntranceAt(6),allNodes.get(5)));
-        paths.add(new Path(allNodes.get(11),nigh.getEntranceAt(1)));
-        paths.add(new Path(nigh.getEntranceAt(1),allNodes.get(11)));
-        paths.add(new Path(allNodes.get(15),nigh.getEntranceAt(3)));
-        paths.add(new Path(allNodes.get(17),nigh.getEntranceAt(3)));
-        paths.add(new Path(nigh.getEntranceAt(3),allNodes.get(15)));
-        paths.add(new Path(nigh.getEntranceAt(3),allNodes.get(17)));
-        paths.add(new Path(nigh.getEntranceAt(9),allNodes.get(16)));
-        paths.add(new Path(allNodes.get(16),nigh.getEntranceAt(9)));
-        paths.add(new Path(allNodes.get(18),nigh.getEntranceAt(8)));
-        paths.add(new Path(nigh.getEntranceAt(8),allNodes.get(18)));
+        setUpEntrances();
+        //set up paths
+        setUpPaths();
+     
+    } //end constuctor
+//
+//    public void setStart(double lat, double lon, String buildingName) {
+//        start = new Node(lat, lon, "ent", 0, true);
+//        switch (buildingName) {
+//            case "HoH":
+//                if (ada) {
+//                    for (Node e : hoh.adaEntrances) {
+//                        Path temp = new Path(start, e);
+//                        if (toEntrance == null || temp.getLength() < toEntrance.getLength()) {
+//                            toEntrance = temp;
+//                        }
+//                    }
+//                } else {
+//                    for (Node e : hoh.entrances) {
+//                        Path temp = new Path(start, e);
+//                        if (toEntrance == null || temp.getLength() < toEntrance.getLength()) {
+//                            toEntrance = temp;
+//                        }
+//                    }
+//                }
+//                break;
+//            case "cmsc":
+//                if (ada) {
+//                    for (Node e : cmsc.adaEntrances) {
+//                        Path temp = new Path(start, e);
+//                        if (toEntrance == null || temp.getLength() < toEntrance.getLength()) {
+//                            toEntrance = temp;
+//                        }
+//                    }
+//                } else {
+//                    for (Node e : cmsc.entrances) {
+//                        Path temp = new Path(start, e);
+//                        if (toEntrance == null || temp.getLength() < toEntrance.getLength()) {
+//                            toEntrance = temp;
+//                        }
+//                    }
+//                }
+//                break;
+//        }
+//    }
+//
+//    public void setEnd(double lat, double lon, String buildingName) {
+//        finish = new Node(lat, lon, "ent", 0, true);
+//        switch (buildingName) {
+//            case "HoH":
+//                if (ada) {
+//                    for (Node e : hoh.adaEntrances) {
+//                        Path temp = new Path(finish, e);
+//                        if (toEnd == null || temp.getLength() < toEnd.getLength()) {
+//                            toEnd = temp;
+//                        }
+//                    }
+//                } else {
+//                    for (Node e : hoh.entrances) {
+//                        Path temp = new Path(finish, e);
+//                        if (toEnd == null || temp.getLength() < toEnd.getLength()) {
+//                            toEnd = temp;
+//                        }
+//                    }
+//                }
+//                break;
+//            case "cmsc":
+//                if (ada) {
+//                    for (Node e : cmsc.adaEntrances) {
+//                        Path temp = new Path(finish, e);
+//                        if (toEnd == null || temp.getLength() < toEnd.getLength()) {
+//                            toEnd = temp;
+//                        }
+//                    }
+//                } else {
+//                    for (Node e : cmsc.entrances) {
+//                        Path temp = new Path(finish, e);
+//                        if (toEnd == null || temp.getLength() < toEnd.getLength()) {
+//                            toEnd = temp;
+//                        }
+//                    }
+//                }
+//                break;
+//        }
+//    }
+
+    public LinkedList<Node> search() {
         
-        
-        
-    }
-    
-    public void setStart(double lat, double lon, String buildingName){
-        start = new Node(lat,lon,"ent",0,true);
-        switch (buildingName){
-            case "HoH":
-                if(ada){
-                    for(Node e: hoh.adaEntrances){
-                        Path temp = new Path(start, e);
-                        if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
-                            toEntrance = temp;
-                        }
-                    }
-                }
-                else{
-                    for(Node e: hoh.entrances){
-                        Path temp = new Path(start, e);
-                        if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
-                            toEntrance = temp;
-                        }
-                    }
-                }
-                break;
-            case "cmsc":
-                if(ada){
-                    for(Node e: cmsc.adaEntrances){
-                        Path temp = new Path(start, e);
-                        if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
-                            toEntrance = temp;
-                        }
-                    }
-                }
-                else{
-                    for(Node e: cmsc.entrances){
-                        Path temp = new Path(start, e);
-                        if(toEntrance == null || temp.getLength()<toEntrance.getLength()){
-                            toEntrance = temp;
-                        }
-                    }
-                }
-                break;
-        }
-    }
-    
-    public void setEnd(double lat, double lon, String buildingName){
-        finish = new Node(lat,lon,"ent",0,true);
-        switch (buildingName){
-            case "HoH":
-                if(ada){
-                    for(Node e: hoh.adaEntrances){
-                        Path temp = new Path(finish, e);
-                        if(toEnd == null || temp.getLength()<toEnd.getLength()){
-                            toEnd = temp;
-                        }
-                    }
-                }
-                else{
-                    for(Node e: hoh.entrances){
-                        Path temp = new Path(finish, e);
-                        if(toEnd == null || temp.getLength()<toEnd.getLength()){
-                            toEnd = temp;
-                        }
-                    }
-                }
-                break;
-            case "cmsc":
-                if(ada){
-                    for(Node e: cmsc.adaEntrances){
-                        Path temp = new Path(finish, e);
-                        if(toEnd == null || temp.getLength()<toEnd.getLength()){
-                            toEnd = temp;
-                        }
-                    }
-                }
-                else{
-                    for(Node e: cmsc.entrances){
-                        Path temp = new Path(finish, e);
-                        if(toEnd == null || temp.getLength()<toEnd.getLength()){
-                            toEnd = temp;
-                        }
-                    }
-                }
-                break;
-        }
-    }
-    
-    public LinkedList<Node> search(){
-        ArrayList<Building> buildings = new ArrayList<>();
-        buildings.add(cmsc);
-        buildings.add(hoh);
-        buildings.add(chs);
-        buildings.add(nigh);
         ArrayList<Node> entrances = new ArrayList<>();
         ArrayList<Node> nodes = new ArrayList<>();
 
-        if(ada){
-            for(Building b : buildings){
+        if (ada) {
+            for (Building b : buildings) {
                 entrances.addAll(b.adaEntrances);
             }
-            for(Node n: allNodes){
-                if(n.getADA()){
+            for (Node n : allNodes) {
+                if (n.getADA()) {
                     nodes.add(n);
                 }
             }
-        } else{
-            for(Building b: buildings){
+        } else {
+            for (Building b : buildings) {
                 entrances.addAll(b.entrances);
             }
             nodes.addAll(allNodes);
         }
-        
+
         nodes.addAll(entrances);
-        Navigator navi = new Navigator(nodes,paths);
+        Navigator navi = new Navigator(nodes, paths);
         navi.execute(toEntrance.getDestination());
         LinkedList<Node> route = navi.getPath(toEnd.getDestination());
         return route;
     }
 
-    private void readXML(){
-        try{        
+    private void readXML() {
+        try {
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             //Must update nodeXMLPath to the absolute path once moved to CS Server
-            String nodeXMLPath = "C:\\Users\\Noah\\Documents\\NetBeansProjects\\ucoNavigation\\src\\Control\\node.xml";
+            String nodeXMLPath = "C:\\Users\\Decker\\Documents\\NetBeansProjects\\ucoNavigation\\src\\Control\\node.xml";
             //String nodeXMLPath = "/home/gq/gq027/public_html/ucoNavigation/src/Control/node.xml";
             InputStream in = new FileInputStream(nodeXMLPath);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             Node node = null;
-            
-            while(eventReader.hasNext()){
+
+            while (eventReader.hasNext()) {
                 XMLEvent event = eventReader.nextEvent();
-                if(event.isStartElement()){
+                if (event.isStartElement()) {
                     StartElement startElement = event.asStartElement();
-                    if(startElement.getName().getLocalPart().equals("Node")){
-                        node= new Node();
-                        Iterator<Attribute> attributes = startElement
-                                .getAttributes();
-                        while (attributes.hasNext()) {
-                            Attribute attribute = attributes.next();
-                            if (attribute.getName().toString().equals("name")) {
-                                node.setID(attribute.getValue());
-                            }
+                    if (startElement.getName().getLocalPart().equalsIgnoreCase("Node")) {
+                        node = new Node();
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart().equalsIgnoreCase("name")) {
+                            event = eventReader.nextEvent();
+                            node.setID(event.asCharacters().toString());
+                            continue;
                         }
                     }
 
                     if (event.isStartElement()) {
-                        if (event.asStartElement().getName().getLocalPart().equals("lat")) {
+                        if (event.asStartElement().getName().getLocalPart().equalsIgnoreCase("lat")) {
                             event = eventReader.nextEvent();
                             node.setLat(Double.parseDouble(event.asCharacters().getData()));
                             continue;
                         }
                     }
-                    if (event.asStartElement().getName().getLocalPart().equals("lon")) {
+                    if (event.asStartElement().getName().getLocalPart().equalsIgnoreCase("lon")) {
                         event = eventReader.nextEvent();
                         node.setLon(Double.parseDouble(event.asCharacters().getData()));
                         continue;
                     }
-                    
-                    if(event.asStartElement().getName().getLocalPart().equals("type")){
+
+                    if (event.asStartElement().getName().getLocalPart().equalsIgnoreCase("type")) {
                         event = eventReader.nextEvent();
                         node.setType(Integer.parseInt(event.asCharacters().getData()));
                         continue;
                     }
 
                     if (event.asStartElement().getName().getLocalPart()
-                            .equals("ada")) {
+                            .equalsIgnoreCase("ada")) {
                         event = eventReader.nextEvent();
                         node.setADA(Boolean.parseBoolean(event.asCharacters().getData()));
-                        
+
                         continue;
                     }
 
-                    if (event.asStartElement().getName().getLocalPart().equals("active")) {
+                    if (event.asStartElement().getName().getLocalPart().equalsIgnoreCase("active")) {
                         event = eventReader.nextEvent();
                         node.setActive(Boolean.parseBoolean(event.asCharacters().getData()));
                         continue;
@@ -354,13 +250,13 @@ public class NodeManager{
                         allNodes.add(node);
                     }
                 }
-                        
+
             }
-        } catch(FileNotFoundException | XMLStreamException e){
+        } catch (FileNotFoundException | XMLStreamException e) {
             e.printStackTrace();
         }
     }
-        
+
     public void saveConfig() throws Exception {
         // create an XMLOutputFactory
         XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
@@ -411,9 +307,116 @@ public class NodeManager{
 
     }
 
-    public void setADA(Boolean a){
-        ada=a;
+    public void setADA(Boolean a) {
+        ada = a;
     }
-    
-    
+
+    private void setUpEntrances() {
+       for (Node n : allNodes) {
+            if (n.getType() == 0) { //Node is an entrance
+                for (Building b : buildings) {
+                    //if it is in building
+                    if (n.isInBuilding(b.getSWCorner(), b.getNECorner()) ) {
+                        b.addEntrance(n);
+                    }//end inf
+
+                }//end building for each
+
+            } //end node is entrance
+        }// end node n foreach
+        System.out.println("Entrnaces done");
+    }
+
+    private void setUpPaths() {
+        System.out.println("Starting paths");
+        /*  //Setup Paths
+        paths.add(new Path(allNodes.get(0), allNodes.get(2))); //Path from CMSC North Entrance up
+        paths.add(new Path(allNodes.get(1), allNodes.get(2))); //E/W Path above CMSC
+        paths.add(new Path(allNodes.get(2), allNodes.get(3))); //Path from CMSC East Entrance up
+        paths.add(new Path(allNodes.get(3), allNodes.get(4))); //Path heading North along West side of HOH
+        paths.add(new Path(allNodes.get(3), allNodes.get(5))); //Path heading North along West side of HOH
+        paths.add(new Path(allNodes.get(5), allNodes.get(6))); //Path heading East along North side of HOH
+        paths.add(new Path(allNodes.get(6), allNodes.get(7))); //Short path heading East along North Side of HOH
+        paths.add(new Path(allNodes.get(7), allNodes.get(8))); //Path from North side of HOH to NC entrance
+        paths.add(new Path(allNodes.get(8), allNodes.get(9))); //Diaganol path on NE side of HOH
+        paths.add(new Path(allNodes.get(9), allNodes.get(10))); //Path South between Nigh and HOH
+        paths.add(new Path(allNodes.get(10), allNodes.get(11))); //Path South between Nigh and HOH
+        paths.add(new Path(allNodes.get(11), allNodes.get(12))); //Path East towards East HOH Entrances
+        paths.add(new Path(allNodes.get(12), allNodes.get(13))); //Path South from East HOH Entrances
+        paths.add(new Path(allNodes.get(11), allNodes.get(14))); //Path East between HOH and CMSC
+        paths.add(new Path(allNodes.get(13), allNodes.get(14)));
+        paths.add(new Path(allNodes.get(13), allNodes.get(0)));
+        paths.add(new Path(allNodes.get(10), allNodes.get(15))); //Path North along West side of HOH to NW corner
+        paths.add(new Path(allNodes.get(10), allNodes.get(16)));
+        paths.add(new Path(allNodes.get(16), allNodes.get(18)));
+        paths.add(new Path(allNodes.get(10), allNodes.get(17)));
+        paths.add(new Path(allNodes.get(1), allNodes.get(19)));
+        paths.add(new Path(allNodes.get(19), allNodes.get(20)));
+        paths.add(new Path(allNodes.get(20), allNodes.get(21)));
+        paths.add(new Path(allNodes.get(20), allNodes.get(22)));
+        paths.add(new Path(allNodes.get(22), allNodes.get(23)));
+        //Adding Symmetrical Paths
+        paths.add(new Path(allNodes.get(2), allNodes.get(0))); //Path from CMSC North Entrance up
+        paths.add(new Path(allNodes.get(2), allNodes.get(1))); //E/W Path above CMSC
+        paths.add(new Path(allNodes.get(3), allNodes.get(2))); //Path from CMSC East Entrance up
+        paths.add(new Path(allNodes.get(4), allNodes.get(3))); //Path heading North along West side of HOH
+        paths.add(new Path(allNodes.get(5), allNodes.get(3))); //Path heading North along West side of HOH
+        paths.add(new Path(allNodes.get(6), allNodes.get(5))); //Path heading East along North side of HOH
+        paths.add(new Path(allNodes.get(7), allNodes.get(6))); //Short path heading East along North Side of HOH
+        paths.add(new Path(allNodes.get(8), allNodes.get(7))); //Path from North side of HOH to NC entrance
+        paths.add(new Path(allNodes.get(9), allNodes.get(8))); //Diaganol path on NE side of HOH
+        paths.add(new Path(allNodes.get(10), allNodes.get(9))); //Path South between Nigh and HOH
+        paths.add(new Path(allNodes.get(11), allNodes.get(10))); //Path South between Nigh and HOH
+        paths.add(new Path(allNodes.get(12), allNodes.get(11))); //Path East towards East HOH Entrances
+        paths.add(new Path(allNodes.get(13), allNodes.get(12))); //Path South from East HOH Entrances
+        paths.add(new Path(allNodes.get(14), allNodes.get(11))); //Path East between HOH and CMSC
+        paths.add(new Path(allNodes.get(14), allNodes.get(13)));
+        paths.add(new Path(allNodes.get(0), allNodes.get(13)));
+        paths.add(new Path(allNodes.get(15), allNodes.get(10))); //Path North along West side of HOH to NW corner
+        paths.add(new Path(allNodes.get(16), allNodes.get(10)));
+        paths.add(new Path(allNodes.get(18), allNodes.get(16)));
+        paths.add(new Path(allNodes.get(17), allNodes.get(10)));
+        paths.add(new Path(allNodes.get(19), allNodes.get(1)));
+        paths.add(new Path(allNodes.get(20), allNodes.get(19)));
+        paths.add(new Path(allNodes.get(21), allNodes.get(20)));
+        paths.add(new Path(allNodes.get(22), allNodes.get(20)));
+        paths.add(new Path(allNodes.get(23), allNodes.get(22)));
+      */
+        //Adding Paths to Entrances
+        Node n = buildings.get(0).getEntranceAt(0);
+        System.out.println("N: "+n.getID());
+        paths.add(new Path( buildings.get(0).getEntranceAt(0), allNodes.get(0)));
+        paths.add(new Path(allNodes.get(0),  buildings.get(0).getEntranceAt(0)));
+        paths.add(new Path( buildings.get(0).getEntranceAt(1), allNodes.get(1)));
+        paths.add(new Path(allNodes.get(1),  buildings.get(0).getEntranceAt(1)));
+       /* paths.add(new Path(allNodes.get(21), chs.getEntranceAt(1)));
+        paths.add(new Path(allNodes.get(23), chs.getEntranceAt(0)));
+        paths.add(new Path(chs.getEntranceAt(0), allNodes.get(23)));
+        paths.add(new Path(chs.getEntranceAt(1), allNodes.get(21)));
+        paths.add(new Path(hoh.getEntranceAt(0), allNodes.get(4)));
+        paths.add(new Path(allNodes.get(4), hoh.getEntranceAt(0)));
+        paths.add(new Path(hoh.getEntranceAt(1), allNodes.get(12)));
+        paths.add(new Path(allNodes.get(12), hoh.getEntranceAt(1)));
+        paths.add(new Path(hoh.getEntranceAt(2), allNodes.get(4)));
+        paths.add(new Path(allNodes.get(4), hoh.getEntranceAt(2)));
+        paths.add(new Path(hoh.getEntranceAt(3), allNodes.get(12)));
+        paths.add(new Path(allNodes.get(12), hoh.getEntranceAt(3)));
+        paths.add(new Path(hoh.getEntranceAt(4), allNodes.get(12)));
+        paths.add(new Path(allNodes.get(12), hoh.getEntranceAt(4)));
+        paths.add(new Path(hoh.getEntranceAt(5), allNodes.get(10)));
+        paths.add(new Path(allNodes.get(10), hoh.getEntranceAt(5)));
+        paths.add(new Path(allNodes.get(5), hoh.getEntranceAt(6)));
+        paths.add(new Path(hoh.getEntranceAt(6), allNodes.get(5)));
+        paths.add(new Path(allNodes.get(11), nigh.getEntranceAt(1)));
+        paths.add(new Path(nigh.getEntranceAt(1), allNodes.get(11)));
+        paths.add(new Path(allNodes.get(15), nigh.getEntranceAt(3)));
+        paths.add(new Path(allNodes.get(17), nigh.getEntranceAt(3)));
+        paths.add(new Path(nigh.getEntranceAt(3), allNodes.get(15)));
+        paths.add(new Path(nigh.getEntranceAt(3), allNodes.get(17)));
+        paths.add(new Path(nigh.getEntranceAt(9), allNodes.get(16)));
+        paths.add(new Path(allNodes.get(16), nigh.getEntranceAt(9)));
+        paths.add(new Path(allNodes.get(18), nigh.getEntranceAt(8)));
+        paths.add(new Path(nigh.getEntranceAt(8), allNodes.get(18)));*/
+    }
+
 }//end NodeManager

@@ -30,7 +30,7 @@ public class Building {
     }
 
     public void addEntrance(Node e) {
-        System.out.println(getName()+" adding Entrace: " + e.getID());
+        //System.out.println(getName()+" adding Entrace: " + e.getID());
         entrances.add(e);
         if (e.getADA()) {
             adaEntrances.add(e);
@@ -38,8 +38,7 @@ public class Building {
     }
 
     public Node getEntranceAt(int i) {
-        System.out.println("B: "+getName()+" s: " + entrances.size());
-        return entrances.get(i);
+             return entrances.get(i);
     }
 
     public String getName() {

@@ -43,6 +43,7 @@ public class NodeManager {
 
     ArrayList<Path> paths;
     ArrayList<Node> allNodes;
+    ArrayList<Node> adaNodes;
     ArrayList<Building> buildings;
 
     Node start, finish;
@@ -56,6 +57,7 @@ public class NodeManager {
     public NodeManager() {
         paths = new ArrayList<>();
         allNodes = new ArrayList<>();
+        adaNodes = new ArrayList<>();
         buildings = new ArrayList<>();
         text = new JTextField();
         text.setPreferredSize(new Dimension(500, 25));
@@ -96,44 +98,32 @@ public class NodeManager {
 
     public void setEnd(double lat, double lon, String buildingName) {
         finish = new Node(lat, lon, "ent", 0, true);
-        
-         for (Building b : buildings) {
+
+        for (Building b : buildings) {
             if (b.getName().equalsIgnoreCase(buildingName)) {
                 for (Node e : b.entrances) {
                     Path temp = new Path(finish, e);
-                    if (toEntrance == null || temp.getLength() < toEntrance.getLength()) {
-                        toEntrance = temp;
+                    if (toEnd == null || temp.getLength() < toEnd.getLength()) {
+                        toEnd = temp;
                     }
                 }
             }
 
         }
-        
+
     }//end setEnd
 
     public LinkedList<Node> search() {
 
-        ArrayList<Node> entrances = new ArrayList<>();
-        ArrayList<Node> nodes = new ArrayList<>();
+        Navigator navi;
 
         if (ada) {
-            for (Building b : buildings) {
-                entrances.addAll(b.adaEntrances);
-            }
-            for (Node n : allNodes) {
-                if (n.getADA()) {
-                    nodes.add(n);
-                }
-            }
+            navi = new Navigator(adaNodes, paths);
+
         } else {
-            for (Building b : buildings) {
-                entrances.addAll(b.entrances);
-            }
-            nodes.addAll(allNodes);
+            navi = new Navigator(allNodes, paths);
         }
 
-        nodes.addAll(entrances);
-        Navigator navi = new Navigator(nodes, paths);
         navi.execute(toEntrance.getDestination());
         LinkedList<Node> route = navi.getPath(toEnd.getDestination());
         return route;
@@ -202,7 +192,10 @@ public class NodeManager {
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart().equalsIgnoreCase("node")) {
-                        allNodes.add(node);
+                         allNodes.add(node);
+                         if(node.getADA()){
+                         adaNodes.add(node);
+                         }
                     }
                 }
 
@@ -279,11 +272,11 @@ public class NodeManager {
 
             } //end node is entrance
         }// end node n foreach
-     
+
     }
 
     private void setUpPaths() {
-       
+
         //Setup Paths
         paths.add(new Path(allNodes.get(0), allNodes.get(2))); //Path from CMSC North Entrance up
         paths.add(new Path(allNodes.get(1), allNodes.get(2))); //E/W Path above CMSC

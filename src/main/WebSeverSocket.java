@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package main;
 
 import Control.JSONReader;
 import Control.JSONWriter;
@@ -42,7 +42,7 @@ class WebSeverSocket extends WebSocketServer{
         manager = new NodeManager();
     }
 
-    @Override
+    @Override   
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         conns.add(conn);
         System.out.println("New connection from " + conn.getRemoteSocketAddress().getAddress().getHostAddress());

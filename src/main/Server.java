@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package main;
 
 import Control.NodeManager;
 
@@ -19,8 +19,8 @@ public class Server {
      */
     public static void main(String[] args){
         //NodeManager manager = new NodeManager();
-        new WebSeverSocket().start();
-        
+       // new WebSeverSocket().start();
+        MockWebServer tester = new MockWebServer();
     }
     
 }

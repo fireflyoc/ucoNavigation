@@ -29,8 +29,8 @@ public class MockWebServer {
     private void mockRecieveMessage() {
 
         manager.setADA(false);
-        manager.setStart(35.654079,-97.472848,"cmsc"); 
-        manager.setEnd(35.654772,-97.472550,"hoh");
+        //manager.setStart(35.654079,-97.472848,"cmsc"); 
+        //manager.setEnd(35.654772,-97.472550,"hoh");
         route = manager.search();
         routeString = writer.convertListToJsonArray(route);
         System.out.println(routeString);

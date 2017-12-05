@@ -5,21 +5,16 @@ package Control;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import Model.Stairs;
 import Model.Building;
 import Model.Node;
 import Model.Path;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.JTextField;
 import javax.xml.stream.XMLEventFactory;
@@ -28,7 +23,6 @@ import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartDocument;
@@ -79,12 +73,10 @@ public class NodeManager {
     } //end constuctor
 //
 
-    public void setStart(double lat, double lon, String buildingName) {
-
-        start = new Node(lat, lon, "ent", 0, true);
-
+    public void setStart(String buildingName) {
         for (Building b : buildings) {
             if (b.getName().equalsIgnoreCase(buildingName)) {
+                start = new Node(b.center.y, b.center.x, "ent", 0, true);
                 for (Node e : b.entrances) {
                     Path temp = new Path(start, e);
                     if (toEntrance == null || temp.getLength() < toEntrance.getLength()) {
@@ -96,11 +88,11 @@ public class NodeManager {
         }
     }//end setStart
 
-    public void setEnd(double lat, double lon, String buildingName) {
-        finish = new Node(lat, lon, "ent", 0, true);
+    public void setEnd(String buildingName) {
 
         for (Building b : buildings) {
             if (b.getName().equalsIgnoreCase(buildingName)) {
+                finish = new Node(b.center.y, b.center.x, "ent", 0, true);
                 for (Node e : b.entrances) {
                     Path temp = new Path(finish, e);
                     if (toEnd == null || temp.getLength() < toEnd.getLength()) {
@@ -133,8 +125,8 @@ public class NodeManager {
         try {
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             //Must update nodeXMLPath to the absolute path once moved to CS Server
-            String nodeXMLPath = "C:\\Users\\Decker\\Documents\\NetBeansProjects\\ucoNavigation\\src\\Control\\node.xml";
-            //String nodeXMLPath = "/home/gq/gq027/public_html/ucoNavigation/src/Control/node.xml";
+            //String nodeXMLPath = "C:\\Users\\Decker\\Documents\\NetBeansProjects\\ucoNavigation\\src\\Control\\node.xml";
+            String nodeXMLPath = "/home/gq/gq027/public_html/ucoNavigation/src/Control/node.xml";
             InputStream in = new FileInputStream(nodeXMLPath);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             Node node = null;

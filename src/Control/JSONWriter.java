@@ -10,15 +10,14 @@ import java.util.LinkedList;
 public class JSONWriter {
 
    public String convertListToJsonArray(LinkedList<Node> list){
-     String output = "{\"path\":[";
+     String output = "{";
        
        for(Node n: list){
-           output+="{\"name\":\""+n.getID()+"\",";
            output+="\"lat\":\""+n.getLat()+"\",";
-           output+="\"lon\":\""+n.getLon()+"\"},";
+           output+="\"lon\":\""+n.getLon()+"\",";
        } //end for loop
        output = output.substring(0, output.length()-1);
-       output +="]}";
+       output +="}";
        return output;
    } //end 
 

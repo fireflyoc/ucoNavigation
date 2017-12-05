@@ -17,6 +17,7 @@ public class Building {
 
     //  Double eastBoundry, westBoundry, lon2, lat2; //Width and Height of the building in pixels, x0/y0 is the top-left corner of the building
     private Point2D.Double SWCorner, NECorner;
+    public Point2D.Double center;
     private String name;
     public ArrayList<Node> entrances;
     public ArrayList<Node> adaEntrances;
@@ -25,6 +26,7 @@ public class Building {
         this.SWCorner = SWCorner;
         this.NECorner = NECorner;
         this.name = name;
+        center = new Point2D.Double((NECorner.x+SWCorner.x)/2, (NECorner.y+SWCorner.y)/2);
         entrances = new ArrayList<>();
         adaEntrances = new ArrayList<>();
     }

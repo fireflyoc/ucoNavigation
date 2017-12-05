@@ -295,6 +295,14 @@ public class NodeManager {
         paths.add(new Path(allNodes.get(20), allNodes.get(21)));
         paths.add(new Path(allNodes.get(20), allNodes.get(22)));
         paths.add(new Path(allNodes.get(22), allNodes.get(23)));
+        paths.add(new Path(allNodes.get(14), allNodes.get(24)));
+        paths.add(new Path(allNodes.get(24), allNodes.get(25)));
+        paths.add(new Path(allNodes.get(24), allNodes.get(26)));
+        paths.add(new Path(allNodes.get(26), allNodes.get(27)));
+        paths.add(new Path(allNodes.get(26), allNodes.get(28)));
+        paths.add(new Path(allNodes.get(28), allNodes.get(29)));
+        paths.add(new Path(allNodes.get(29), allNodes.get(30)));
+        paths.add(new Path(allNodes.get(30), allNodes.get(31)));
         //Adding Symmetrical Paths
         paths.add(new Path(allNodes.get(2), allNodes.get(0))); //Path from CMSC North Entrance up
         paths.add(new Path(allNodes.get(2), allNodes.get(1))); //E/W Path above CMSC
@@ -321,6 +329,14 @@ public class NodeManager {
         paths.add(new Path(allNodes.get(21), allNodes.get(20)));
         paths.add(new Path(allNodes.get(22), allNodes.get(20)));
         paths.add(new Path(allNodes.get(23), allNodes.get(22)));
+        paths.add(new Path(allNodes.get(24), allNodes.get(14)));
+        paths.add(new Path(allNodes.get(25), allNodes.get(24)));
+        paths.add(new Path(allNodes.get(26), allNodes.get(24)));
+        paths.add(new Path(allNodes.get(27), allNodes.get(26)));
+        paths.add(new Path(allNodes.get(28), allNodes.get(26)));
+        paths.add(new Path(allNodes.get(29), allNodes.get(28)));
+        paths.add(new Path(allNodes.get(30), allNodes.get(29)));
+        paths.add(new Path(allNodes.get(31), allNodes.get(30)));
 
         //Adding Paths to Entrances
         paths.add(new Path(buildings.get(0).getEntranceAt(0), allNodes.get(0)));
@@ -355,6 +371,18 @@ public class NodeManager {
         paths.add(new Path(allNodes.get(16), buildings.get(2).getEntranceAt(9)));
         paths.add(new Path(allNodes.get(18), buildings.get(2).getEntranceAt(8)));
         paths.add(new Path(buildings.get(2).getEntranceAt(8), allNodes.get(18)));
+        paths.add(new Path(allNodes.get(25), buildings.get(2).getEntranceAt(0)));
+        paths.add(new Path(allNodes.get(27), buildings.get(2).getEntranceAt(0)));
+        paths.add(new Path(allNodes.get(28), buildings.get(2).getEntranceAt(2)));
+        paths.add(new Path(allNodes.get(29), buildings.get(2).getEntranceAt(4)));
+        paths.add(new Path(allNodes.get(30), buildings.get(2).getEntranceAt(6)));
+        paths.add(new Path(allNodes.get(31), buildings.get(2).getEntranceAt(7)));
+        paths.add(new Path(buildings.get(2).getEntranceAt(0), allNodes.get(25)));
+        paths.add(new Path(buildings.get(2).getEntranceAt(0), allNodes.get(27)));
+        paths.add(new Path(buildings.get(2).getEntranceAt(2), allNodes.get(28)));
+        paths.add(new Path(buildings.get(2).getEntranceAt(4), allNodes.get(29)));
+        paths.add(new Path(buildings.get(2).getEntranceAt(6), allNodes.get(30)));
+        paths.add(new Path(buildings.get(2).getEntranceAt(7), allNodes.get(31)));
     }
 
 }//end NodeManager

@@ -192,6 +192,70 @@
         <ada>true</ada>
         <active>true</active>
     </Node>
+    <Node>
+        <name>South of Nigh</name>
+        <lat>35.654256</lat> 
+        <lon>-97.471448</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>South of Nigh Stairs</name>
+        <lat>35.654399</lat> 
+        <lon>-97.471447</lon>
+        <type>1</type>
+        <ada>false</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>South East of Nigh</name>
+        <lat>35.654451</lat> 
+        <lon>-97.471020</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>South of Nigh ADA</name>
+        <lat>35.654423</lat> 
+        <lon>-97.471375</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>East South of Nigh</name>
+        <lat>35.654684</lat> 
+        <lon>-97.470844</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>    
+    <Node>
+        <name>Nigh East Center</name>
+        <lat>35.655189</lat> 
+        <lon>-97.471013</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>East of Nigh Main</name>
+        <lat>35.655341</lat> 
+        <lon>-97.470805</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
+    <Node>
+        <name>North East of Nigh</name>
+        <lat>35.655730</lat> 
+        <lon>-97.471141</lon>
+        <type>1</type>
+        <ada>true</ada>
+        <active>true</active>
+    </Node>
     <Node> 
         <name>MSC North</name>
         <lat>35.654203</lat> 
